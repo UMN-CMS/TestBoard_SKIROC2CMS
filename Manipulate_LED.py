@@ -33,7 +33,7 @@ GPIO.output(LED_Top_Left, GPIO.HIGH)
 
 for i in range(1,100):
 	time.sleep(0.25)
-	print 'Iteration ', i, 'Switch State = ',  GPIO.input(BUTTON_Switch_0)
+	print('Iteration ', i, 'Switch State = ',  GPIO.input(BUTTON_Switch_0))
 	if(GPIO.input(BUTTON_Switch_0)):
 		GPIO.output(LED_Bottom_Left, GPIO.LOW)	
 	else:
