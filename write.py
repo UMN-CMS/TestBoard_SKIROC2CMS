@@ -1,10 +1,11 @@
+#!/usr/bin/python3
 #
 #   Author: Ryan Quinn
 #   Email: quinn.ryanx@gmail.com
 #   Sends (writes) a multiple-byte command to the FPGA and waits for a response.
 #
 
-import rpi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time
 
 
