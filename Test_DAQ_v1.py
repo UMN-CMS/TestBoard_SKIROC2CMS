@@ -164,4 +164,9 @@ while Choice == 1 or Choice == 2 or Choice == 3:
 			Write_Choice = input('Write Choice : ')
 			Test_Write(Write_Choice)
 	if Choice == 2:
-		Test_Read()	
+		Test_Read()
+
+
+#Clean up GPIO states
+GPIO.cleanup()
+	
