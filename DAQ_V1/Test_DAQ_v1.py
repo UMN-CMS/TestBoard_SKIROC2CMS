@@ -143,7 +143,7 @@ def Test_Read():
 			print
 			print 'Data: \n'
 			for i in range(0,8):
-				print GPIO.input(DATA[i]),
+				print GPIO.input(DATA[i])
 			print
 			#Data has been read
 			GPIO.output(ST, GPIO.LOW)# indicates DATA has been read, and ACK may be removed		
