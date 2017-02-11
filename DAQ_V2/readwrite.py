@@ -113,8 +113,8 @@ def send_bitstream(bitfile):
 
 def read(outfile):
     '''
-        Reads data back from the FPGA into the file
-        'outfile'. Uses DOUT[6:0].
+        Reads data back from the FPGA into
+        the file 'outfile'. Uses DOUT[6:0].
     '''
 
     setupGPIO(False)    # Setup GPIO for the type of operation (read)
