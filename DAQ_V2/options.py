@@ -8,7 +8,9 @@
 #
 
 import readwrite as rw
-import binary as bn
+import binary
+
+
 
 def printOptions():
     print('\nOPTIONS:-[Note: Only one of the options below are valid, No protection for any other option]\n')
@@ -16,6 +18,8 @@ def printOptions():
     print('2) Read operation\n')
     print('3) Programming\n')
     print('0) Quit\n')
+
+
 
 def writeOptions():
     print('\nOPTIONS:-[Note: Only one of the options below are valid, No protection for any other option]\n')
@@ -36,15 +40,20 @@ def writeOptions():
     if choice == 0:
         exit()
     else:
-        command = bn.toBinary(choice-1)
-        print(command)
+        command = binary.toBinary(choice-1, 4)
         rw.sendcommand(command)
 
+
+
 def readOptions():
-    pass
+    rw.read('test_data.txt')
+
+
 
 def programming():
     pass
+
+
 
 def main():
     funcs = [exit, writeOptions, readOptions, programming]
