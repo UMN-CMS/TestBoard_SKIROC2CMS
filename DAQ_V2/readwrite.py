@@ -121,11 +121,14 @@ def read(outfile):
 
     f = open(outfile, 'w')  # Open text file to be written to.
 
-    while True:                                                 # Reads forever. Should be changed soon
+    transac = 0
+    while transac < 50:
         GPIO.wait_for_edge(ACK, GPIO.FALLING, timeout=30000)    # Wait for ACK to toggle signaling FPGA is sending data
 
-        data = GPIO.input(DOUT[1:7])                            # Reading the data from DOUT excluding MSB
+        data = GPIO.input(DOUT[1:8])                            # Reading the data from DOUT excluding MSB
+        print(binary.toStr(data, 7))
         f.write(binary.toStr(data, 7) + '\n')                   # Writing data to a text file
+        transac += 1
 
         GPIO.output(ST, not GPIO.input(ST))                     # Toggle ST to signal we are done reading
 
