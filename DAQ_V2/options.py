@@ -41,7 +41,7 @@ def writeOptions():
         exit()
     else:
         command = binary.toBinary(choice-1, 4)
-        rw.sendcommand(command)
+        rw.send_command(command)
 
 
 

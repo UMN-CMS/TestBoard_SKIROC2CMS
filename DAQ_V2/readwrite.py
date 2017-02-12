@@ -56,8 +56,8 @@ def send_command(command):
     # Python's array numbering system is backwards from the FPGA's bus labeling.
     # In Python, DOUT[0] and DOUT[7] correspond to MSB and LSB, respectively.
     GPIO.output(DOUT[0], 1)                                 # DOUT[7] (MSB) is always HI on write
-    GPIO.output(DOUT[1:4], command)                         # DOUT[6:3] are used for data transmission
-    GPIO.output(DOUT[5:7], [0, 0, 0])                       # DOUT[2:0] are used to send bitstreams
+    GPIO.output(DOUT[1:5], command)                         # DOUT[6:3] are used for data transmission
+    GPIO.output(DOUT[5:8], [0, 0, 0])                       # DOUT[2:0] are used to send bitstreams
                                                             # so they stay low here.
 
     GPIO.output(ST, not GPIO.input(ST))                     # Toggle strobe so FPGA knows we're ready
@@ -95,8 +95,8 @@ def send_bitstream(bitfile):
     # Sending the bitstream to the FPGA
     for i in range(0, 128):
         GPIO.output(DOUT[0], 1)                         # DOUT MSB is HI for write
-        GPIO.output(DOUT[1:4], 0)                       # DOUT[6:3] are not used for the bitstream.
-        GPIO.output(DOUT[5:7], bitstream[3*i:(3*i)+2])  # DOUT[2:0] are used for bitstream transmission.
+        GPIO.output(DOUT[1:5], 0)                       # DOUT[6:3] are not used for the bitstream.
+        GPIO.output(DOUT[5:8], bitstream[3*i:(3*i)+2])  # DOUT[2:0] are used for bitstream transmission.
 
         GPIO.output(ST, not GPIO.input(ST))             # Same timing structure as seen in the
                                                         # sendcommand() function.
