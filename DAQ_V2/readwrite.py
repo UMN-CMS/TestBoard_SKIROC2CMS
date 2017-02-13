@@ -73,7 +73,7 @@ def send_command(command):
 
     # To send the bitstream. Not sure if we need to create this for other possible commands...
     if(command == [0, 0, 1, 0]):
-        send_bitstream('bitstream.txt')
+        send_bitstream('programming.txt')
     else:
         cleanupGPIO()
 
@@ -88,7 +88,7 @@ def send_bitstream(bitfile):
     setupGPIO(True)
 
     f = open(bitfile, 'r')                              # Opening the file containing the bitstream.
-    bitstream = [int(num) for num in f.readlines()[0]]  # Converting the data in the file into an array.
+    bitstream = [int(line) for line in f]               # Converting the data in the file into an array.
     f.close()                                           # The bitstream must be contained in the first
                                                         # line of the bitfile.
 
