@@ -7,7 +7,7 @@
 #
 
 import RPi.GPIO as GPIO
-import binary
+import binary, options
 
 
 
@@ -55,21 +55,21 @@ def send_command(command):
 
     # Python's array numbering system is backwards from the FPGA's bus labeling.
     # In Python, DOUT[0] and DOUT[7] correspond to MSB and LSB, respectively.
-    GPIO.output(DOUT[0], 1)                                 # DOUT[7] (MSB) is always HI on write
-    GPIO.output(DOUT[1:5], command)                         # DOUT[6:3] are used for data transmission
-    GPIO.output(DOUT[5:8], [0, 0, 0])                       # DOUT[2:0] are used to send bitstreams
-                                                            # so they stay low here.
+    GPIO.output(DOUT[0], 1)                     # DOUT[7] (MSB) is always HI on write
+    GPIO.output(DOUT[1:5], command)             # DOUT[6:3] are used for data transmission
+    GPIO.output(DOUT[5:8], [0, 0, 0])           # DOUT[2:0] are used to send bitstreams
+                                                # so they stay low here.
 
-    GPIO.output(ST, not GPIO.input(ST))                     # Toggle strobe so FPGA knows we're ready
+    GPIO.output(ST, not GPIO.input(ST))         # Toggle strobe so FPGA knows we're ready
 
-    GPIO.wait_for_edge(ACK, GPIO.FALLING, timeout=30000)    # Waiting for ACK to go low within
-                                                            # 30 sec (30000 ms). Might want to
-                                                            # raise an exception if this
-                                                            # function times out...
+    wait_for_toggle(ACK, GPIO.FALLING, 30000)   # Waiting for ACK to go low within
+                                                # 30 sec (30000 ms). Might want to
+                                                # raise an exception if this
+                                                # function times out...
 
-    GPIO.output(ST, not GPIO.input(ST))                     # Toggle strobe again
+    GPIO.output(ST, not GPIO.input(ST))         # Toggle strobe again
 
-    GPIO.wait_for_edge(ACK, GPIO.RISING, timeout=30000)     # Wait for ACK to toggle again
+    wait_for_toggle(ACK, GPIO.RISING, 30000)    # Wait for ACK to toggle again
 
     # To send the bitstream. Not sure if we need to create this for other possible commands...
     if(command == [0, 0, 1, 0]):
@@ -101,11 +101,11 @@ def send_bitstream(bitfile):
         GPIO.output(ST, not GPIO.input(ST))             # Same timing structure as seen in the
                                                         # sendcommand() function.
 
-        GPIO.wait_for_edge(ACK, GPIO.FALLING, timeout=30000)
+        wait_for_toggle(ACK, GPIO.FALLING, 30000)
 
         GPIO.output(ST, not GPIO.input(ST))
 
-        GPIO.wait_for_edge(ACK, GPIO.RISING, timeout=30000)
+        wait_for_toggle(ACK, GPIO.RISING, 30000)
 
     cleanupGPIO()
 
@@ -122,23 +122,34 @@ def read(outfile):
     f = open(outfile, 'w')  # Open text file to be written to.
 
     for transac in range(0,50):
-        GPIO.wait_for_edge(ACK, GPIO.FALLING, timeout=30000)    # Wait for ACK to toggle signaling FPGA is sending data
+        wait_for_toggle(ACK, GPIO.FALLING, 30000)   # Wait for ACK to toggle signaling FPGA is sending data
 
-        data = []                                               # Reading from DOUT excluding MSB
-        for pin in DOUT[1:8]:                                   # Read from all pins into 'data' array
+        data = []                                   # Reading from DOUT excluding MSB
+        for pin in DOUT[1:8]:                       # Read from all pins into 'data' array
             data.append(GPIO.input(pin))
 
-        print(transac, ':', binary.toStr(data, 7))                            # Show data on screen
-        f.write(binary.toStr(data, 7) + '\n')                   # Writing data to a text file
+        print(transac, ':', binary.toStr(data, 7))  # Show data on screen
+        f.write(binary.toStr(data, 7) + '\n')       # Writing data to a text file
         transac += 1
 
-        GPIO.output(ST, not GPIO.input(ST))                     # Toggle ST to signal we are done reading
+        GPIO.output(ST, not GPIO.input(ST))         # Toggle ST to signal we are done reading
 
-        GPIO.wait_for_edge(ACK, GPIO.RISING, timeout=30000)     # Wait for ACK from FPGA
+        wait_for_toggle(ACK, GPIO.RISING, 30000)    # Wait for ACK from FPGA
 
-        GPIO.output(ST, not GPIO.input(ST))                     # Toggle ST to signal we are ready for next transaction.
+        GPIO.output(ST, not GPIO.input(ST))         # Toggle ST to signal we are ready for next transaction.
 
     f.close()
 
     cleanupGPIO()
 
+
+
+def wait_for_toggle(pin, edge_type, timeout):
+    '''
+        Waits for 'pin' to change state on a
+        'edge_type' edge within 'timeout' ms.
+        If it times out, the program restarts.
+    '''
+    chan = GPIO.wait_for_edge(pin, edge_type, timeout)
+    if chan == None:
+        options.main()
