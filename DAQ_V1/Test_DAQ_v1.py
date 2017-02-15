@@ -308,11 +308,11 @@ while Choice == 1 or Choice == 2 or Choice == 3:
 ###################################Print out the bit stream##############################################################		
 			for iii in range(0,Num_bits):
 			        if(buffer_bits_for_programming[iii] < 0):
-		                print 'PARSING UNSUCESSFULL! DO NOT PROCEED.'
-				GPIO.cleanup()
-				quit()
-		        else:
-		                print buffer_bits_for_programming[iii],
+			                print 'PARSING UNSUCESSFULL! DO NOT PROCEED.'
+					GPIO.cleanup()
+					quit()
+			        else:
+			                print buffer_bits_for_programming[iii],
 			print 'Bit Stream created to be pushed'
 #########################################################################################################################			
 		#First invoke the SetProgMode Write Command
@@ -322,7 +322,7 @@ while Choice == 1 or Choice == 2 or Choice == 3:
 		Test_Write_Programming_Quad()
 		Sanity_Flag = 0		
 		for iii in range(0,Num_bits):
-			if(buffer_bits_for_programming_read_back[iii] != buffer_bits_for_programming[iii])
+			if(buffer_bits_for_programming_read_back[iii] != buffer_bits_for_programming[iii]):
 				Sanity_Flag = 1
 		if(Sanity_Flag == 0):
 			print 'MATCH OBTAINED!!'

@@ -7,4 +7,4 @@ cut -d, -f1 --complement Skiroc2cms_Programming_CurrentSensitive.csv > Parse_Ski
 sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_Default.csv
 sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_ChargeSensitive.csv
 sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_CurrentSensitive.csv
-python Run_TestDAQ.txt 
+python Test_DAQ_v1.py 
