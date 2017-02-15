@@ -56,31 +56,31 @@ def Create_BitStream_Buffer(fileName):
 	fp = open(filename, 'r')
 	line = fp.readline()
 ############################Start parsing file##############################################
-while line != '':
-	buffer_bit_address_size = line[0:line.find(",")]
-	tmp_line = line[line.find(",")+1:line.find("\n")+1]
-	buffer_bit_address = tmp_line[0:tmp_line.find(",")]
-	buffer_bits_choice = tmp_line[tmp_line.find(",")+1:tmp_line.find("\n")]
+	while line != '':
+		buffer_bit_address_size = line[0:line.find(",")]
+		tmp_line = line[line.find(",")+1:line.find("\n")+1]
+		buffer_bit_address = tmp_line[0:tmp_line.find(",")]
+		buffer_bits_choice = tmp_line[tmp_line.find(",")+1:tmp_line.find("\n")]
 
-	if(buffer_bits_choice == 'ones'):
-		for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
-			buffer_bits_for_programming[iii] = 1
-	elif(buffer_bits_choice == 'zeros' or buffer_bits_choice == 'NO'):
-		for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
-			buffer_bits_for_programming[iii] = 0
+		if(buffer_bits_choice == 'ones'):
+			for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
+				buffer_bits_for_programming[iii] = 1
+		elif(buffer_bits_choice == 'zeros' or buffer_bits_choice == 'NO'):
+			for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
+				buffer_bits_for_programming[iii] = 0
 
-	elif(int(buffer_bit_address) == Reversed_Register_Address1 or int(buffer_bit_address) == Reversed_Register_Address2 or int(buffer_bit_address) == Reversed_Register_Address3):
-		counter = int(buffer_bit_address_size) - 1
-		for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
-			buffer_bits_for_programming[iii] = int(buffer_bits_choice[counter])
-			counter -= 1
-	else:
-		counter = 0
-		for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
-			buffer_bits_for_programming[iii] = int(buffer_bits_choice[counter])
-			counter += 1
+		elif(int(buffer_bit_address) == Reversed_Register_Address1 or int(buffer_bit_address) == Reversed_Register_Address2 or int(buffer_bit_address) == Reversed_Register_Address3):
+			counter = int(buffer_bit_address_size) - 1
+			for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
+				buffer_bits_for_programming[iii] = int(buffer_bits_choice[counter])
+				counter -= 1
+		else:
+			counter = 0
+			for iii in range(int(buffer_bit_address),int(buffer_bit_address)+int(buffer_bit_address_size)):
+				buffer_bits_for_programming[iii] = int(buffer_bits_choice[counter])
+				counter += 1
 
-	line = fp.readline()
+		line = fp.readline()
 #######################################File parsed###########################################
 	fp.close()
 
