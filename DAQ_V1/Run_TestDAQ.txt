@@ -1,0 +1,10 @@
+ssconvert Skiroc2cms_Programming_Default.xls Skiroc2cms_Programming_Default.csv
+ssconvert Skiroc2cms_Programming_ChargeSensitive.xls Skiroc2cms_Programming_ChargeSensitive.csv
+ssconvert Skiroc2cms_Programming_CurrentSensitive.xls Skiroc2cms_Programming_CurrentSensitive.csv
+cut -d, -f1 --complement Skiroc2cms_Programming_Default.csv > Parse_Skiroc2cms_Programming_Default.csv
+cut -d, -f1 --complement Skiroc2cms_Programming_ChargeSensitive.csv > Parse_Skiroc2cms_Programming_ChargeSensitive.csv
+cut -d, -f1 --complement Skiroc2cms_Programming_CurrentSensitive.csv > Parse_Skiroc2cms_Programming_CurrentSensitive.csv
+sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_Default.csv
+sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_ChargeSensitive.csv
+sed -i -e "s/\"//g" Parse_Skiroc2cms_Programming_CurrentSensitive.csv
+python Run_TestDAQ.txt 
