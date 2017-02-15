@@ -52,7 +52,7 @@ GPIO.setup(ST, GPIO.OUT)
 GPIO.setup(ACK, GPIO.IN)
 
 ####################################################################################################################
-def Create_BitStream_Buffer(fileName):
+def Create_BitStream_Buffer(filename):
 	fp = open(filename, 'r')
 	line = fp.readline()
 ############################Start parsing file##############################################
@@ -108,6 +108,7 @@ def Test_Write_Programming_Quad():
 		        GPIO.output(DATA[7], buffer_bits_for_programming[iii])
 ##############################DOUT has been setup############################
 #set strobe LOW
+			time.sleep(0.01)#To be safe
 		        GPIO.output(ST, GPIO.LOW)
 #keep ST high until ACK is high[Another option is to even do nothing here as ST will remain high as its set to be high]
 		        while (GPIO.input(ACK) != 0):
@@ -295,28 +296,28 @@ while Choice == 1 or Choice == 2 or Choice == 3:
 	        print '2) Charge Sensitive\n'
 	        print '3) Current Sensitive\n'
 		Programming_Choice = input('Programming Choice : ')
-		while Programming_Choice == 1 or Programming_Choice == 2 or Programming_Choice == 3:
-			if Programming_Choice == 1:
-				print 'Default Programming'
-				Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_Default.csv")
-			elif Programming_Choice == 2:
-				print 'Charge Sensitive Programming'
-				Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_ChargeSensitive.csv")
-			else:
-				print 'Current Sensitive Programming'
-                                Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_CurrentSensitive.csv")
+		if Programming_Choice == 1:
+			print 'Default Programming'
+			Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_Default.csv")
+		elif Programming_Choice == 2:
+			print 'Charge Sensitive Programming'
+			Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_ChargeSensitive.csv")
+		else:
+			print 'Current Sensitive Programming'
+                        Create_BitStream_Buffer("Parse_Skiroc2cms_Programming_CurrentSensitive.csv")
 ###################################Print out the bit stream##############################################################		
-			for iii in range(0,Num_bits):
-			        if(buffer_bits_for_programming[iii] < 0):
-			                print 'PARSING UNSUCESSFULL! DO NOT PROCEED.'
-					GPIO.cleanup()
-					quit()
-			        else:
-			                print buffer_bits_for_programming[iii],
-			print 'Bit Stream created to be pushed'
+		for iii in range(0,Num_bits):
+		        if(buffer_bits_for_programming[iii] < 0):
+		                print 'PARSING UNSUCESSFULL! DO NOT PROCEED.'
+				GPIO.cleanup()
+				quit()
+		        else:
+		                print buffer_bits_for_programming[iii],
+		print
+		print 'Bit Stream created to be pushed'
 #########################################################################################################################			
 		#First invoke the SetProgMode Write Command
-		print 'Write Prog Mode'
+		print 'Write Prog Mode Command'
 		Test_Write(3)		
 		print 'Now the bit stream shall be pushed'
 		Test_Write_Programming_Quad()
