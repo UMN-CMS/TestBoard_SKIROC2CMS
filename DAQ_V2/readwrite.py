@@ -7,7 +7,7 @@
 #
 
 import RPi.GPIO as GPIO
-import binary, options
+import binary
 
 
 
@@ -152,4 +152,14 @@ def wait_for_toggle(pin, edge_type, timeout):
     '''
     chan = GPIO.wait_for_edge(pin, edge_type, timeout)
     if chan == None:
-        options.main()
+        gotomain()
+
+
+
+def gotomain():
+    '''
+        Goes back to main() function of
+        options.py.
+    '''
+    import options
+    options.main()
