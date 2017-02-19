@@ -38,10 +38,10 @@ def writeOptions():
     print('0)  Exit\n')
     choice = int(input("Choice: "))
     if choice == 0:
-        exit()
+        import TestBoard_DAQ
+        TestBoard_DAQ.main()
     else:
-        command = binary.toBinary(choice-1, 4)
-        rw.send_command(command)
+        rw.send_command(choice)
 
 
 

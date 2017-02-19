@@ -45,11 +45,13 @@ def cleanupGPIO():
 
 
 
-def send_command(command):
+def send_command(num):
     '''
         Sends a 1 byte command to the FPGA and waits
         for a response.
     '''
+
+    command = binary.toBinary(num-1, 4)
 
     setupGPIO(True) # Set up the GPIO pins for the type of operation (write)
 
@@ -71,11 +73,7 @@ def send_command(command):
 
     wait_for_toggle(ACK, GPIO.RISING, 30000)    # Wait for ACK to toggle again
 
-    # To send the bitstream. Not sure if we need to create this for other possible commands...
-    if(command == [0, 0, 1, 0]):
-        send_bitstream('programming.txt')
-    else:
-        cleanupGPIO()
+    cleanupGPIO()
 
 
 
@@ -161,5 +159,5 @@ def gotomain():
         Goes back to main() function of
         options.py.
     '''
-    import options
-    options.main()
+    import TestBoard_DAQ
+    TestBoard_DAQ.main()
