@@ -94,6 +94,8 @@ def create_bitstream_buffer(bitfile):
 
     f.close()
 
+    bitstream.reverse()
+
     return bitstream
 
 
