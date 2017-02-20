@@ -8,5 +8,5 @@ Contains files used to test out the RPi's GPIO functionality.
 Version 1 of the test DAQ
 
 ###DAQ_V2
-Version 2 of the test DAQ
-To run, use `python3 options.py`.
+Version 2 of the test DAQ.
+To run, use `python3 TestBoard_DAQ.py`.

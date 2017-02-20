@@ -150,6 +150,7 @@ def wait_for_toggle(pin, edge_type, timeout):
     '''
     chan = GPIO.wait_for_edge(pin, edge_type, timeout)
     if chan == None:
+        print('FPGA did not respond within', timeout/1000, 'seconds')
         gotomain()
 
 
