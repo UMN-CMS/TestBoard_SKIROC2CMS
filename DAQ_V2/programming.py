@@ -50,7 +50,7 @@ def programming_options():
     bitstream = create_bitstream_buffer(files[choice])
     if -99 in bitstream:
         print('PARSING UNSUCCESSFUL! DO NOT PROCEED.')
-        cleanupGPIO()
+        readwrite.cleanupGPIO()
         exit()
     else:
         for bit in bitstream:
@@ -60,34 +60,11 @@ def programming_options():
     readwrite.send_command(3)
     print("Now the bit stream will be pushed")
 
-    send_bitstream(bitstream)
-
-
-
-
-def setupGPIO(write):
-    '''
-        Set up GPIO pins. 'write' is TRUE
-        for a write operation and FALSE
-        for a read operation.
-    '''
-
-    GPIO.setmode(GPIO.BCM)                                              # Broadcom pin definitions
-    GPIO.setup(DOUT, GPIO.OUT if write else GPIO.IN)                    # Controlled by Pi/FPGA on write/read
-    GPIO.setup(RW, GPIO.OUT, initial=GPIO.LOW if write else GPIO.HIGH)  # Controlled by Pi. HI on read, LO on write.
-    GPIO.setup(ST, GPIO.OUT, initial=GPIO.HIGH)                         # Controlled by Pi. Always HI before transaction.
-    GPIO.setup(ACK, GPIO.IN)                                            # Controlled by FPGA
-
-
-
-def cleanupGPIO():
-    '''
-        Cleanup GPIO pins. Placeholder
-        for now just in case extra steps
-        need to be taken during cleanup.
-    '''
-
-    GPIO.cleanup()
+    bitstream_readback = send_bitstream(bitstream)                  # Sends a bitstream to FPGA. If the bitstream that
+    if bitstream==bitstream_readback:                               # was read back from the FPGA is not the same,
+        print('Programming Successful')                             # then programming was unsuccessful.
+    else:
+        print('Programming Unsuccessful')
 
 
 
@@ -100,7 +77,24 @@ def create_bitstream_buffer(bitfile):
 
     f = open(bitfile, 'r')
     bitstream = [-99 for i in range(0,384)]
+    for line in f:
+        arr = line.rstrip().split(',')
+        numbits = int(arr[0])
+        startpt = int(arr[1])
+        data = arr[2]
+        if data=='ones':
+            for i in range(startpt, numbits):
+                bitstream[i] = 1
+        else if data=='zeros':
+            for i in range(startpt, numbits):
+                bitstream[i] = 0
+        else:
+            for i in range(0, numbits):
+                bitstream[i+startpt] = int(data[i])
+
     f.close()
+
+    return bitstream
 
 
 
@@ -110,7 +104,7 @@ def send_bitstream(bitstream):
         FPGA using the last 3 bits of DOUT.
     '''
 
-    setupGPIO(True)
+    readwrite.setupGPIO(True)
 
     # Sending the bitstream to the FPGA. This is done four times to program each SKIROC.
     for n in range(0,4):
@@ -123,36 +117,44 @@ def send_bitstream(bitstream):
             GPIO.output(ST, not GPIO.input(ST))             # Same timing structure as seen in the
                                                             # readwrite.send_command() function.
 
-            wait_for_toggle(ACK, GPIO.FALLING, 30000)
+            readwrite.wait_for_toggle(ACK, GPIO.FALLING, 30000)
 
             GPIO.output(ST, not GPIO.input(ST))
 
-            wait_for_toggle(ACK, GPIO.RISING, 30000)
+            readwrite.wait_for_toggle(ACK, GPIO.RISING, 30000)
         print('Push', n+1, 'complete')
 
     print('Performing interleaved write/read operations to read back the bitstream')
 
-    cleanupGPIO()
+    bitstream_readback = []
+    for i in range(0,128):
+        readwrite.setupGPIO(True)
 
+        GPIO.output(DOUT[0], 1)
+        GPIO.output(DOUT[1:5], 0)
+        GPIO.output(DOUT[5:8], bitstream[3*i:3*i+3])
 
+        GPIO.output(ST, not GPIO.input(ST))
 
-def wait_for_toggle(pin, edge_type, timeout):
-    '''
-        Waits for 'pin' to change state on a
-        'edge_type' edge within 'timeout' ms.
-        If it times out, the program restarts.
-    '''
-    chan = GPIO.wait_for_edge(pin, edge_type, timeout)
-    if chan == None:
-        print("FPGA did not respond within 30 seconds")
-        gotomain()
+        readwrite.wait_for_toggle(ACK, GPIO.FALLING, 30000)
 
+        GPIO.output(ST, not GPIO.input(ST))
 
+        readwrite.wait_for_toggle(ACK, GPIO.RISING, 30000)
 
-def gotomain():
-    '''
-        Goes back to main() function of
-        options.py.
-    '''
-    import TestBoard_DAQ
-    TestBoard_DAQ.main()
+        readwrite.setupGPIO(False)
+
+        readwrite.wait_for_toggle(ACK, GPIO.FALLING, 30000)
+
+        for n in range(5,8):
+            bitstream_readback.append(int(GPIO.input(n)))
+
+        GPIO.output(ST, not GPIO.input(ST))
+
+        readwrite.wait_for_toggle(ACK, GPIO.RISING, 30000)
+
+    print("Programming sequence complete")
+
+    readwrite.cleanupGPIO()
+
+    return bitstream_readback
