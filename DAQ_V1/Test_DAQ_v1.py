@@ -25,6 +25,9 @@ def Write_Options():
         print '10) SetSelect 1001\n'
         print '11) WrConf3Bit 1010\n'
         print '12) ReadStatus 1011\n'
+	print '13) SyncRequest 1100\n'
+	print '14) StopSyncRequest 1101\n'
+	print '15) WrongSequence 1110\n'
 	print '0)  Exit\n'
 #        print '12) Unused 1 1100\n'
 #        print '13) Unused 2 1101\n'
@@ -235,18 +238,36 @@ def Test_Write(Command):
                 GPIO.output(DATA[2], GPIO.LOW)
                 GPIO.output(DATA[3], GPIO.HIGH)
                 GPIO.output(DATA[4], GPIO.LOW)
-	else:
+	elif Command == 12:
         	GPIO.output(DATA[1], GPIO.HIGH)
                 GPIO.output(DATA[2], GPIO.LOW)
                 GPIO.output(DATA[3], GPIO.HIGH)
                 GPIO.output(DATA[4], GPIO.HIGH)
+	elif Command == 13:
+                GPIO.output(DATA[1], GPIO.HIGH)
+                GPIO.output(DATA[2], GPIO.HIGH)
+                GPIO.output(DATA[3], GPIO.LOW)
+                GPIO.output(DATA[4], GPIO.LOW)
+        elif Command == 14:
+                GPIO.output(DATA[1], GPIO.HIGH)
+                GPIO.output(DATA[2], GPIO.HIGH)
+                GPIO.output(DATA[3], GPIO.LOW)
+                GPIO.output(DATA[4], GPIO.HIGH)
+	elif Command == 15:
+		GPIO.output(DATA[0], GPIO.LOW)
+                GPIO.output(DATA[1], GPIO.HIGH)
+                GPIO.output(DATA[2], GPIO.HIGH)
+                GPIO.output(DATA[3], GPIO.HIGH)
+                GPIO.output(DATA[4], GPIO.LOW)
 ###############DOUT has been setup############################
 #set strobe LOW
 	GPIO.output(ST, GPIO.LOW)
+	print 'Waiting for ACK\n'
 #keep ST high until ACK is high[Another option is to even do nothing here as ST will remain high as its set to be high]
 	while (GPIO.input(ACK) != 0):
         	GPIO.output(ST, GPIO.LOW)
-
+	print 'Received ACK\n'
+	print
 	GPIO.output(ST, GPIO.HIGH)#on receiving ACK set ST to high
 ###################################################################################################################################	
 
@@ -283,10 +304,11 @@ while Choice == 1 or Choice == 2 or Choice == 3:
 	Choice = input('Choice : ')
 	if Choice == 1:
 		Write_Choice = 1 #tmp value to enter the loop, another option is do-while
-		while Write_Choice > 0 and Write_Choice < 13:
+		while Write_Choice > 0 and Write_Choice < 16:
 			Write_Options()
 			Write_Choice = input('Write Choice : ')
-			Test_Write(Write_Choice)
+			if Write_Choice > 0 and Write_Choice < 16:
+				Test_Write(Write_Choice)
 	if Choice == 2:
 		Test_Read()
 	if Choice == 3:
