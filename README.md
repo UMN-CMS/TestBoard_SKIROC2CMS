@@ -1,4 +1,4 @@
-#RPi Test Beam
+#RPi Test Board
 ##Written in Python 3.6
 
 ###RPi_Test
