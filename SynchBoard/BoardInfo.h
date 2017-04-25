@@ -3,8 +3,17 @@
 
 
 
-// PAGE used to power cycle the ORM's and CTL
+// Board Type (SYNC or RDOUT) TODO
+// #define BOARD_TYPE
+
+
+// PAGE and pin numbers used to power cycle the ORM's and CTL
 #define FPGA_POWER_PAGE 0xF
+#define ORM0_POWER_PIN (0x1 - 1) // 0x1 is the physical pin, 0x0 is the pin as referenced by GPIOB
+#define ORM1_POWER_PIN (0x2 - 1)
+#define ORM2_POWER_PIN (0x3 - 1)
+#define ORM3_POWER_PIN (0x4 - 1)
+#define CTL_POWER_PIN (0x5 - 1)
 
 
 // ORM PAGE Definitions

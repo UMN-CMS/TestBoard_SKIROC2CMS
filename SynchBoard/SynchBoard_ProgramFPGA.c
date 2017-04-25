@@ -24,37 +24,39 @@ void end_SPI();
 
 int main(int argc, char *argv[]) {
 
+
+	printf("\n\tFLASH MEMORY WRITE\n\n");
+
+
 	// Parsing arguments
 	if(argc != 2) {
 		die("Expected more arguments. Proper usage is: sudo ./program_fpga {ORM#} < {HEXFILE}");
 	}
 
+	// TODO Check if an argument is valid based on BOARD_TYPE in BoardInfo.h
 	const char FLASH_PAGE;
 	const char GPIO_PIN;
 	if(argv[1] == '0') {
-		FLASH_PAGE = 0x3;
-		GPIO_PIN = 0x1 - 1;
+		FLASH_PAGE = ORM0_CONFIG_PAGE;
+		GPIO_PIN = ORM0_POWER_PIN;
 	}
 	else if(argv[1] == '1') {
-		FLASH_PAGE = 0x5;
-		GPIO_PIN = 0x2 - 1;
+		FLASH_PAGE = ORM1_CONFIG_PAGE;
+		GPIO_PIN = ORM1_POWER_PIN;
 	}
 	else if(argv[1] == '2') {
-		FLASH_PAGE = 0x7;
-		GPIO_PIN = 0x3 - 1;
+		FLASH_PAGE = ORM2_CONFIG_PAGE;
+		GPIO_PIN = ORM2_POWER_PIN;
 	}
 	else if(argv[1] == '3') {
-		FLASH_PAGE = 0x9;
-		GPIO_PIN = 0x4 - 1;
+		FLASH_PAGE = ORM3_CONFIG_PAGE;
+		GPIO_PIN = ORM3_POWER_PIN;
 	}
 	else if(argv[1] == '4') {
-		FLASH_PAGE = 0x11;
-		GPIO_PIN = 0x5 - 1;
+		FLASH_PAGE = CTL_CONFIG_PAGE;
+		GPIO_PIN = CTL_POWER_PIN;
 	}
 	
-
-	printf("\n\tFLASH MEMORY WRITE\n\n");
-
 
 	// Setting up SPI
 	init_SPI();
