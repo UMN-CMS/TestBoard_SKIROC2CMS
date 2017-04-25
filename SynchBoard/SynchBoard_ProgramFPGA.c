@@ -3,6 +3,7 @@
 //
 
 #include <bcm2835.h>
+#include "BoardInfo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -14,11 +15,6 @@
 #define MAX_BYTES 3011324
 #define MAX_TRIALS 5
 
-#define CHIP_ID 2144792 // hex 20 BA 18
-
-#define FPGA_POWER_PAGE 0xF
-#define FLASH_PAGE 0x3
-#define GPIO_PIN (0x1 - 1)	// first is the physical pin #. The GPIOB number of that pin is always one less.
 
 
 void die(const char *s);
@@ -27,6 +23,35 @@ void end_SPI();
 
 
 int main(int argc, char *argv[]) {
+
+	// Parsing arguments
+	if(argc != 2) {
+		die("Expected more arguments. Proper usage is: sudo ./program_fpga {ORM#} < {HEXFILE}");
+	}
+
+	const char FLASH_PAGE;
+	const char GPIO_PIN;
+	if(argv[1] == '0') {
+		FLASH_PAGE = 0x3;
+		GPIO_PIN = 0x1 - 1;
+	}
+	else if(argv[1] == '1') {
+		FLASH_PAGE = 0x5;
+		GPIO_PIN = 0x2 - 1;
+	}
+	else if(argv[1] == '2') {
+		FLASH_PAGE = 0x7;
+		GPIO_PIN = 0x3 - 1;
+	}
+	else if(argv[1] == '3') {
+		FLASH_PAGE = 0x9;
+		GPIO_PIN = 0x4 - 1;
+	}
+	else if(argv[1] == '4') {
+		FLASH_PAGE = 0x11;
+		GPIO_PIN = 0x5 - 1;
+	}
+	
 
 	printf("\n\tFLASH MEMORY WRITE\n\n");
 
