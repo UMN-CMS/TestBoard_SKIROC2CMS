@@ -1,5 +1,4 @@
 #RPi Test Board
-##Written in Python 3.6
 
 ###RPi_Test
 Contains files used to test out the RPi's GPIO functionality.
