@@ -8,12 +8,15 @@ SynchBoard_ProgramFPGA.c:
 	Usage:
 		sudo ./program_fpga < {ENTER HEX FILE HERE}
 
-ReadBoardID.c
+ReadBoardID.c:
 	Compiled as: ReadBoardID
 	Reads the board ID as specified by the first 8 DIP switches.
 
 SetIPAddress:
 	Uses ReadBoardID and set's the IP address to 192.168.222.xxx where xxx is the board ID.
+
+BoardData.h:
+	Contains information about the board (PAGEs, SYNC or RDOUT, etc...)
 
 
 
