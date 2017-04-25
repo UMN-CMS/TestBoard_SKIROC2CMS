@@ -1,0 +1,14 @@
+#!/bin/bash
+
+echo "Warning! This script reboots the Raspberry Pi! You must reconnect using ssh to the new IP Address!"
+sleep 0.5
+
+BoardID=$(sudo ./ReadBoardID)
+echo "New IP Address is: 192.168.222.$BoardID"
+sleep 0.5
+
+echo "Rebooting in 5 seconds to apply the new IP. Press Ctrl-C to cancel!"
+sleep 5
+sudo sed -i "s/static ip_address=192.168.222.*/static ip_address=192.168.222.$BoardID/" /etc/dhcpcd.conf
+sleep 0.5		# Just in case...
+sudo reboot "now"

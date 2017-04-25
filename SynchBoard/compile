@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo 'gcc SynchBoard_ReadFlashMem.c -o readflashmem -l bcm2835 -Wall -std=c11'
+gcc SynchBoard_ReadFlashMem.c -o readflashmem -l bcm2835 -Wall -std=c11
+
+echo 'gcc SynchBoard_ProgramFPGA.c -o program_fpga -l bcm2835 -Wall -std=c11'
+gcc SynchBoard_ProgramFPGA.c -o program_fpga -l bcm2835 -Wall -std=c11
+
+echo 'gcc ReadBoardID.c -o ReadBoardID -l bcm2835 -Wall -std=c11'
+gcc ReadBoardID.c -o ReadBoardID -l bcm2835 -Wall -std=c11
