@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo 'gcc SynchBoard_FuncTest.c -o functest -l bcm2835 -Wall -std=c11'
+gcc SynchBoard_FuncTest.c -o functest -l bcm2835 -Wall -std=c11
+
+echo 'gcc SynchBoard_SpeedTest.c -o speedtest -l bcm2835 -Wall -std=c11'
+gcc SynchBoard_SpeedTest.c -o speedtest -l bcm2835 -Wall -std=c11
+
+echo 'gcc SynchBoard_FlashMem.c -o flashmem -l bcm2835 -Wall -std=c11'
+gcc SynchBoard_FlashMem.c -o flashmem -l bcm2835 -Wall -std=c11
+
+echo 'gcc GetBoardType.c -o getboardtype -l bcm2835 -Wall -std=c11'
+gcc GetBoardType.c -o getboardtype -l bcm2835 -Wall -std=c11

@@ -1,0 +1,15 @@
+################Of immediate interest############################
+Makefile : the RPI makefile
+main.c : the main file for configuring & taking data
+gpiolib.c : GPIO library
+####################################################################
+
+#############Offline analysis###############################################
+SingleLayerPlot.C : C++ file to run in ROOT to produce pictorial displays of pedestals/noise
+ANA_RUN_170317_0912.txt : Full summary file produced by analysis script 
+Skiroc2CMS_sensor_map_simplified.csv : Mapping used by analysis script 
+analisi-1.py : Python script for analysis of the semi-processed data file 
+RUN_170317_0912.raw.txt : Raw data file (octal format)
+RUN_170317_0912.txt : Semi-processed data file (text format)
+AVG_ANA_RUN_170317_0912.txt : simplified summary file: average pedestal+stdev for 127 channels in low gain, then high gain 
+###################################################################################

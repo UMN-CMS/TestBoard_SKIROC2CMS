@@ -1,0 +1,16 @@
+#!/bin/bash
+
+echo 'gcc read_flash_memory.c -o read_flash_memory -l bcm2835 -Wall -std=c11'
+gcc read_flash_memory.c -o read_flash_memory -l bcm2835 -Wall -std=c11
+
+echo 'gcc program_fpga.c -o program_fpga -l bcm2835 -Wall -std=c11'
+gcc program_fpga.c -o program_fpga -l bcm2835 -Wall -std=c11
+
+echo 'gcc read_board_ID.c -o read_board_ID -l bcm2835 -Wall -std=c11'
+gcc read_board_ID.c -o read_board_ID -l bcm2835 -Wall -std=c11
+
+echo 'gcc check_cable_disconnect.c -o check_cable_disconnect -l bcm2835 -Wall -std=c11'
+gcc check_cable_disconnect.c -o check_cable_disconnect -l bcm2835 -Wall -std=c11
+
+echo 'gcc get_board_type.c -o get_board_type -l bcm2835 -Wall -std=c11'
+gcc get_board_type.c -o get_board_type -l bcm2835 -Wall -std=c11
