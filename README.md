@@ -1,11 +1,11 @@
 # HGCal Test Beam DAQ
 Contains the code used for the DAQ as well as extra code used to program FPGA's, check for cable disconnects, etc...
 
----
-***
-___
+
+### HGCAL_2017_TB_DAQ_Test_V1
 
 
+### System_Codes
 read_flash_memory.c:
 	Compiled as: read_flash_memory
 	Reads out all of the data stored in the flash memory.
@@ -41,3 +41,6 @@ Tests/:
 
 OldPythonCode/:
 	Contains the original python SPI code.
+
+
+### Other
