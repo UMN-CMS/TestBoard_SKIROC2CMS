@@ -3,6 +3,7 @@ Contains the code used for the DAQ as well as extra code used to program FPGA's,
 
 
 ## HGCAL_2017_TB_DAQ_Test_V1
+Contains the first version of the DAQ code. This uses the Raspberry Pi as the DAQ instead of the IP bus.
 
 
 ## System_Codes
@@ -37,3 +38,4 @@ Contains code used for various tasks. This directory contains code than can be u
 
 
 ## Other
+Contains other code and old versions of the DAQ.
