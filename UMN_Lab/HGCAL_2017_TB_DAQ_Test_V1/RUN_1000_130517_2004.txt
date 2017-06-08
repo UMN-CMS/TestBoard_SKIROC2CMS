@@ -1,5 +1,0 @@
-Configuration used for SK2
-da ab ff 32 e0 d5 3f e7 f8 b0 40 0 0 0 0 0 0 0 1f ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff ff e9 d5 22 8a 80 25 
-Total number of events: 1000
-_130517_2004
-####################################################
