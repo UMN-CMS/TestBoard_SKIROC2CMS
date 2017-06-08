@@ -8,7 +8,6 @@ Contains the code used for the DAQ as well as extra code used to program FPGA's,
 ## System_Codes
 Contains code used for various tasks. This directory contains code than can be used on both types of boards as well as readout and sync board specific codes.
 
-### RDOUT
 * read_flash_memory.c:
   * Compiled as: read_flash_memory
   * Reads out all of the data stored in the flash memory.
@@ -28,6 +27,8 @@ Contains code used for various tasks. This directory contains code than can be u
 * pwr_cycle.c:
   * Compiled as: pwr_cycle
   * Power cycles an FPGA.
+
+### RDOUT
 
 ### SYNC
 * check_cable_disconnect.c:
