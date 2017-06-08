@@ -13,7 +13,6 @@
 //--------------------------------------------------------------------
 
 #include <bcm2835.h>
-#include "BoardInfo.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

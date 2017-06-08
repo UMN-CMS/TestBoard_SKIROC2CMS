@@ -1,3 +1,5 @@
+# HGCal Test Beam DAQ
+
 read_flash_memory.c:
 	Compiled as: read_flash_memory
 	Reads out all of the data stored in the flash memory.
