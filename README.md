@@ -1,4 +1,6 @@
 # HGCal Test Beam DAQ
+Contains the code used for the DAQ as well as extra code used to program FPGA's, check for cable disconnects, etc...
+
 
 read_flash_memory.c:
 	Compiled as: read_flash_memory
