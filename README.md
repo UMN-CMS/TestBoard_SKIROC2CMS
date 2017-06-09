@@ -1,6 +1,7 @@
 # HGCal Test Beam DAQ
 Contains the code used for the DAQ as well as extra code used to program FPGA's, check for cable disconnects, etc...
 
+This entire folder should be copied to each Pi that is going to be used. This folder also contains the BCM2835 C library so it can be built on each Pi.
 
 ## HGCAL_2017_TB_DAQ_Test_V1
 Contains the first version of the DAQ code. This uses the Raspberry Pi as the DAQ instead of the IP bus.
