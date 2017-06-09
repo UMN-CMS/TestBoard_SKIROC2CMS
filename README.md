@@ -1,13 +1,19 @@
 # HGCal Test Beam DAQ
 Contains the code used for the DAQ as well as extra code used to program FPGA's, check for cable disconnects, etc...
 
+
+
+## Installation
 This entire folder should be copied to each Pi that is going to be used. This folder also contains the BCM2835 C library so it can be built on each Pi.
 
-## HGCAL_2017_TB_DAQ_Test_V1
+
+
+## Contents
+### HGCAL_2017_TB_DAQ_Test_V1
 Contains the first version of the DAQ code. This uses the Raspberry Pi as the DAQ instead of the IP bus.
 
 
-## System_Codes
+### System_Codes
 Contains code used for various tasks. This directory contains code than can be used on both types of boards as well as readout and sync board specific codes.
 
 * read_flash_memory.c:
@@ -38,9 +44,9 @@ Contains code used for various tasks. This directory contains code than can be u
   * Compiles all of the files to their respective outputs.
 
 
-### RDOUT
+#### RDOUT
 
-### SYNC
+#### SYNC
 * check_cable_disconnect.c:
   * Compiled as: check_cable_disconnect
   * Displays the status of each HDMI cable as connected/disconnected.
@@ -63,5 +69,5 @@ Contains code used for various tasks. This directory contains code than can be u
   * The hex files used to program an FPGA with the program_fpga routine. sync_flash2.hex is a compressed version of the firmware.
 
 
-## Other
+### Other
 Contains other code and old versions of the DAQ.
