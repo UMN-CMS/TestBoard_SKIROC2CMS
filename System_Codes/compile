@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# General
+gcc -o read_flash_memory read_flash_memory.c -l bcm2835
+gcc -o read_board_ID read_board_ID.c -l bcm2835
+gcc -o program_fpga program_fpga.c -l bcm2835
+gcc -o get_board_type get_board_type.c -l bcm2835
+gcc -o pwr_cycle pwr_cycle.c -l bcm2835
+
+# Sync Specific
+gcc -o check_cable_disconnect check_cable_disconnect.c -l bcm2835
+gcc -o run_on_boot run_on_boot.c -l bcm2835
+gcc -o set_clk_delay set_clk_delay.c -l bcm2835
+gcc -o calibrate_clk_delays calibrate_clk_delays.c -l bcm2835
+
+# Readout Specific

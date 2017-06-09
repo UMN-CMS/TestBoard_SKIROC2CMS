@@ -1,4 +1,0 @@
-#!/bin/bash
-
-gcc set_clk_delay.c -o set_clk_delay -l bcm2835
-gcc calibrate_clk_delays.c -o calibrate_clk_delays -l bcm2835
