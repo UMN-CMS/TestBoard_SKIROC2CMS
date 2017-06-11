@@ -74,6 +74,7 @@ Contains software to be installed on each Raspberry Pi. Currently, the list is:
 * bcm2835 SPI C library
 * ncurses (for vim)
 * vim
+To install, use `sudo ./install`
 
 
 ### Other/

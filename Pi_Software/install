@@ -1,19 +1,78 @@
 #!/bin/bash
+## MUST BE RUN AS A SUPERUSER!! ##
+if [[ $EUID -ne 0 ]]; then
+   echo "This script must be run as root"
+   exit 1
+fi
 
 # Installs the bcm2835 SPI C library, ncurses (for vim), and vim.
 
 # Install BCM2835
+echo 'Installing the bcm2835 C library'
 tar zxvf bcm2835-1.52.tar.gz
 cd bcm2835-1.52
 ./configure
 make
-sudo make check
-sudo make install
+make check
+make install
 cd ..
 rm -r bcm2835-1.52/
 
-# TODO
-# Install ncurses
-# Install vim
+# Install ncurses. This needs to be installed for vim
+# Instructions taken from http://www.linuxfromscratch.org/lfs/view/development/chapter06/ncurses.html
 
-# need to try it on a real rpi first.
+# Unpack the tarball
+echo 'Installing ncurses'
+tar zxvf ncurses-6.0.tar.gz
+cd ncurses-6.0/
+
+#Don't install a static library that is not handled by configure:
+sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
+
+#Prepare Ncurses for compilation:
+./configure --prefix=/usr           \
+            --mandir=/usr/share/man \
+            --with-shared           \
+            --without-debug         \
+            --without-normal        \
+            --enable-pc-files       \
+            --enable-widec
+
+#Compile the package:
+make
+
+#Install the package:
+make install
+
+#Move the shared libraries to the /lib directory, where they are expected to reside:
+mv -v /usr/lib/libncursesw.so.6* /lib
+
+#Because the libraries have been moved, one symlink points to a non-existent file. Recreate it:
+ln -sfv ../../lib/$(readlink /usr/lib/libncursesw.so) /usr/lib/libncursesw.so
+
+#Many applications still expect the linker to be able to find non-wide-character Ncurses libraries. Trick such applications into linking with wide-character libraries by means of symlinks and linker scripts:
+for lib in ncurses form panel menu ; do
+    rm -vf                    /usr/lib/lib${lib}.so
+    echo "INPUT(-l${lib}w)" > /usr/lib/lib${lib}.so
+    ln -sfv ${lib}w.pc        /usr/lib/pkgconfig/${lib}.pc
+done
+
+#Finally, make sure that old applications that look for -lcurses at build time are still buildable:
+rm -vf                     /usr/lib/libcursesw.so
+echo "INPUT(-lncursesw)" > /usr/lib/libcursesw.so
+ln -sfv libncurses.so      /usr/lib/libcurses.so
+
+# Remove the old directory
+cd ..
+rm -r ncurses-6.0/
+
+
+# Install vim
+echo 'Installing vim'
+tar zxvf vim.tar.gz
+cd vim
+./configure
+make -j 4
+make install
+cd ..
+rm -r vim/
