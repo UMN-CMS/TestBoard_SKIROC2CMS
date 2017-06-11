@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Installs the bcm2835 SPI C library, ncurses (for vim), and vim.
+
+# Install BCM2835
+tar zxvf bcm2835-1.52.tar.gz
+cd bcm2835-1.52
+./configure
+make
+sudo make check
+sudo make install
+cd ..
+rm -r bcm2835-1.52/
+
+# TODO
+# Install ncurses
+# Install vim
+
+# need to try it on a real rpi first.

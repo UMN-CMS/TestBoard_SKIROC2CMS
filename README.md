@@ -4,7 +4,7 @@ Contains the code used for the DAQ as well as extra code used to program FPGA's,
 
 
 ## Installation
-This entire folder should be copied to each Pi that is going to be used. This folder also contains the BCM2835 C library so it can be built on each Pi.
+This entire folder should be copied to each Pi that is going to be used. The bcm2835 SPI C library source, ncurses source (for vim), and vim source are all included to be installed on each Pi.
 
 
 
@@ -67,6 +67,13 @@ Contains code used for various tasks. This directory contains code than can be u
 
 * sync_flash.hex & sync_flash2.hex:
   * The hex files used to program an FPGA with the program_fpga routine. sync_flash2.hex is a compressed version of the firmware.
+
+
+## Pi_Software/
+Contains software to be installed on each Raspberry Pi. Currently, the list is:
+* bcm2835 SPI C library
+* ncurses (for vim)
+* vim
 
 
 ### Other/
