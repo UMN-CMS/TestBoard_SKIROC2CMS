@@ -1,21 +1,22 @@
 #!/bin/bash
 
+# Compiles all of the files in the System_Codes folder.
+# Update this file as new files are added.
+# Most files that need to be run from a terminal should just be placed in the System_Codes folder, and in the SYNC/ or RDOUT/ folder if it is specific to one type of board.
+
+
+
 # General
-gcc -o read_flash_memory read_flash_memory.c -l bcm2835
-gcc -o read_board_ID read_board_ID.c -l bcm2835
-gcc -o program_fpga program_fpga.c -l bcm2835
-gcc -o get_board_type get_board_type.c -l bcm2835
-gcc -o pwr_cycle pwr_cycle.c -l bcm2835
+gcc -o read_flash_memory	src/read_flash_memory.c	-l bcm2835
+gcc -o read_board_ID		src/read_board_ID.c	-l bcm2835
+gcc -o program_fpga		src/program_fpga.c	-l bcm2835
+gcc -o get_board_type		src/get_board_type.c	-l bcm2835
+gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
 
 # Sync Specific
-cd SYNC/
-gcc -o check_cable_disconnect check_cable_disconnect.c -l bcm2835
-gcc -o run_on_boot run_on_boot.c -l bcm2835
-gcc -o set_clk_delay set_clk_delay.c -l bcm2835
-gcc -o calibrate_clk_delays calibrate_clk_delays.c -l bcm2835
-cd ..
+gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
+gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
+gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
+gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
 
 # Readout Specific
-cd RDOUT/
-
-cd ..
