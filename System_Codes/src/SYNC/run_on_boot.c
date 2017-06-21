@@ -32,6 +32,7 @@ int main() {
 	// Setting up SPI
 	init_SPI();
 
+	int time = 0;
 	while(1) {
 		if(!(time % 5)) {
 			if(check_for_clear()) {
@@ -114,7 +115,7 @@ uint16_t check_cable_disconnect() {
 
 
 
-int pwr_cycle_orm() {
+void pwr_cycle_orm() {
 
 	char PAGE[1];
 	char GPIO_PIN = 0;// only possible ORM is ORM0 on the syncboard.

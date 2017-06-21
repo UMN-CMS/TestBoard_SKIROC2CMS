@@ -43,9 +43,10 @@ if [ "$TYPE" == "sync" ]; then
 		# checks for the string run_on_boot
 		# if it's not found, adds the line "sudo ./path/to/SYNC/run_on_boot &" to the second to last line of rc.local
 		# the last line of rc.local is exit
-		sed '$i \
-			sudo .'"$RUN_ON_BOOT_LOC"' &
-		' /etc/rc.local
+		sed -i '$i \
+sudo .'"$RUN_ON_BOOT_LOC"' &
+' /etc/rc.local
+		# the lack of indenting like that is needed for the file to look fine
 	fi
 
 	exit 0
