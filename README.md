@@ -4,7 +4,7 @@ Contains the code used for the DAQ as well as extra code used to program FPGA's,
 
 
 ## Installation
-This entire folder should be copied to each Pi that is going to be used. The bcm2835 SPI C library source, ncurses source (for vim), and vim source are all included to be installed on each Pi.
+This entire folder should be copied to each Pi that is going to be used. The bcm2835 SPI C library source, ncurses source (for vim), and vim source are all included to be installed on each Pi. The software that is contained is installed using `sudo ./install` while inside the Pi_Software directory. To compile the system codes, run `sudo ./compile [board type]` from the System_Codes directory where [board type] is either sync or rdout.
 
 
 
