@@ -60,8 +60,13 @@ void send_conn_info(uint16_t conns) {
 
 
 int check_for_clear() {
-	//TODO
-	return 0;
+
+	// Check BCM pin 15 (physical pin 10)
+	bcm2835_gpio_fsel(RPI_GPIO_P1_15, BCM2835_GPIO_FSEL_INPT);
+	bcm2835_gpio_set_pud(RPI_GPIO_P1_15, BCM2835_GPIO_PUD_UP);
+
+	// return 1 if LO, 0 if HI
+        return !(bcm2835_gpio_lev(RPI_GPIO_P1_15));
 }
 
 
@@ -70,7 +75,6 @@ uint16_t check_cable_disconnect() {
 
 	char PAGE[1];
 
-	// Let's read the DIP switches
 	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);
 	PAGE[0] = 0x9;					// Chip has PAGE 13
 	bcm2835_spi_writenb(PAGE,1);

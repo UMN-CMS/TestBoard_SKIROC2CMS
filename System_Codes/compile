@@ -3,7 +3,15 @@
 # Compiles all of the files in the System_Codes folder.
 # Update this file as new files are added.
 # Most files that need to be run from a terminal should just be placed in the System_Codes folder, and in the SYNC/ or RDOUT/ folder if it is specific to one type of board.
+# Usage: sudo ./compile [board type (rdout/sync)]
 
+
+# Check for arguments
+if [ $# -eq 0 ]; then
+	echo "No arguments supplied. Proper usage is sudo ./compile [board type (rdout/sync)]"
+	exit 1
+fi
+type="$1"
 
 
 # General
@@ -13,10 +21,22 @@ gcc -o program_fpga		src/program_fpga.c	-l bcm2835
 gcc -o get_board_type		src/get_board_type.c	-l bcm2835
 gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
 
+
 # Sync Specific
-gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
-gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
-gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
-gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
+if [ "$type" == "sync" ]; then
+	gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
+	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
+	gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
+	gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
+	exit 0
+fi
+i
 
 # Readout Specific
+if [ "$type" == "rdout" ]; then
+	exit 0
+fi
+
+
+echo "The argument must either be 'sync' or 'rdout'"
+exit 1
