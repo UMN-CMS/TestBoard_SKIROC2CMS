@@ -6,10 +6,17 @@
 # Usage: sudo ./compile [board type (rdout/sync)]
 
 
+# make sure user is root
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root."
+  exit
+fi
+
+
 # Check for arguments, get board type
 if [ $# -eq 0 ]; then
 	echo "No arguments supplied. Proper usage is sudo ./compile [board type (rdout/sync)]"
-	exit 1
+	exit
 fi
 TYPE="$1"
 
@@ -52,4 +59,3 @@ fi
 
 
 echo "The argument must either be 'sync' or 'rdout'"
-exit 1
