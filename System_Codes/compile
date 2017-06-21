@@ -6,12 +6,12 @@
 # Usage: sudo ./compile [board type (rdout/sync)]
 
 
-# Check for arguments
+# Check for arguments, get board type
 if [ $# -eq 0 ]; then
 	echo "No arguments supplied. Proper usage is sudo ./compile [board type (rdout/sync)]"
 	exit 1
 fi
-type="$1"
+TYPE="$1"
 
 
 # General
@@ -23,17 +23,30 @@ gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
 
 
 # Sync Specific
-if [ "$type" == "sync" ]; then
+if [ "$TYPE" == "sync" ]; then
+
 	gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
 	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
 	gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
 	gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
+
+	# if rc.local doesn't already have run_on_boot, add it!
+	RUN_ON_BOOT_LOC="$PWD/SYNC/run_on_boot"
+	if ! grep -q "run_on_boot" /etc/rc.local ; then
+		# checks for the string run_on_boot
+		# if it's not found, adds the line "sudo ./path/to/SYNC/run_on_boot &" to the second to last line of rc.local
+		# the last line of rc.local is exit
+		sed '$i \
+			sudo .'"$RUN_ON_BOOT_LOC"' &
+		' /etc/rc.local
+	fi
+
 	exit 0
 fi
-i
+
 
 # Readout Specific
-if [ "$type" == "rdout" ]; then
+if [ "$TYPE" == "rdout" ]; then
 	exit 0
 fi
 
