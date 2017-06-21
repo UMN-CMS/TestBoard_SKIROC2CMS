@@ -54,7 +54,34 @@ int main() {
 
 
 void send_conn_info(uint16_t conns) {
-	//TODO
+
+	char page[4], cmd[4], data[4];
+	int orm = 4;
+	int addr = 0x112;
+
+	page[0] = 2 * (orm + 1);
+
+	// Select the appropriate oRM.
+	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);
+	bcm2835_spi_writenb(page,1);
+	bcm2835_spi_chipSelect(BCM2835_SPI_CS1);
+
+
+	unsigned spi_read, spi_auto_inc, spi_addr, spi_command;
+
+	// Create the 32-bit command word.
+	spi_read = 0;
+	spi_auto_inc = 0;
+	spi_addr = addr & 0x3FF;
+	spi_command = (spi_read<<31)|(spi_auto_inc<<30)|(spi_addr<<20)|(conns & 0xFFFF);
+	cmd[0] = spi_command >> 24;
+	cmd[1] = spi_command >> 16;
+	cmd[2] = spi_command >> 8;
+	cmd[3] = spi_command >> 0;
+
+	// Send the command.
+	bcm2835_spi_transfernb(cmd, data, 4);
+
 	return;
 }
 
@@ -67,7 +94,7 @@ int check_for_clear() {
 	bcm2835_gpio_set_pud(RPI_GPIO_P1_15, BCM2835_GPIO_PUD_UP);
 
 	// return 1 if LO, 0 if HI
-        return !(bcm2835_gpio_lev(RPI_GPIO_P1_15));
+	return !(bcm2835_gpio_lev(RPI_GPIO_P1_15));
 }
 
 
