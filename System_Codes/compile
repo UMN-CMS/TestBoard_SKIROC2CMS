@@ -51,6 +51,8 @@ if [ "$TYPE" == "sync" ]; then
 sudo .'"$RUN_ON_BOOT_LOC"' &
 ' /etc/rc.local
 		# the lack of indenting like that is needed for the file to look fine
+	else
+		echo "There is already a run_on_boot line in /etc/rc.local. Make sure it points to the right location!"
 	fi
 
 	exit 0
