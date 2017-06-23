@@ -40,6 +40,7 @@ if [ "$TYPE" == "sync" ]; then
 	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
 	gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
 	gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
+	gcc -o SYNC/wiggle_mode			src/SYNC/wiggle_mode.c			-l bcm2835
 
 	# if rc.local doesn't already have run_on_boot, add it!
 	RUN_ON_BOOT_LOC="$PWD/SYNC/run_on_boot"

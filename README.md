@@ -42,6 +42,9 @@ Contains code used for various tasks. This directory contains code than can be u
 #### System_Codes/RDOUT
 
 #### System_Codes/SYNC
+* wiggle_mode:
+  * Toggles the MODE pin on the Pi every half second.
+
 * check_cable_disconnect:
   * Displays the status of each HDMI cable as connected/disconnected.
 
