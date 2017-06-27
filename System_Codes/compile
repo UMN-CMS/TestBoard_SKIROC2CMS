@@ -22,13 +22,13 @@ TYPE="$1"
 
 
 # General
-gcc -o read_flash_memory	src/read_flash_memory.c	-l bcm2835 -Wall -std=c11
-gcc -o read_board_ID		src/read_board_ID.c	-l bcm2835 -Wall -std=c11
-gcc -o program_fpga		src/program_fpga.c	-l bcm2835 -Wall -std=c11
-gcc -o get_board_type		src/get_board_type.c	-l bcm2835 -Wall -std=c11
-gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835 -Wall -std=c11
-gcc -o spi_get_16bits		src/spi_get_16bits.c	-l bcm2835 -Wall -std=c11
-gcc -o spi_put_16bits		src/spi_put_16bits.c	-l bcm2835 -Wall -std=c11
+gcc -o read_flash_memory	src/read_flash_memory.c	-l bcm2835
+gcc -o read_board_ID		src/read_board_ID.c	-l bcm2835
+gcc -o program_fpga		src/program_fpga.c	-l bcm2835
+gcc -o get_board_type		src/get_board_type.c	-l bcm2835
+gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
+gcc -o spi_get_16bits		src/spi_get_16bits.c	-l bcm2835
+gcc -o spi_put_16bits		src/spi_put_16bits.c	-l bcm2835
 
 
 # Sync Specific
@@ -38,11 +38,11 @@ if [ "$TYPE" == "sync" ]; then
 		mkdir SYNC
 	fi
 
-	gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835 -Wall -std=c11
-	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835 -Wall -std=c11
-	gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835 -Wall -std=c11
-	gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835 -Wall -std=c11
-	gcc -o SYNC/wiggle_mode			src/SYNC/wiggle_mode.c			-l bcm2835 -Wall -std=c11
+	gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
+	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
+	gcc -o SYNC/calibrate_clk_delays	src/SYNC/calibrate_clk_delays.c		-l bcm2835
+	gcc -o SYNC/run_on_boot			src/SYNC/run_on_boot.c			-l bcm2835
+	gcc -o SYNC/wiggle_mode			src/SYNC/wiggle_mode.c			-l bcm2835
 
 	# if rc.local doesn't already have run_on_boot, add it!
 	RUN_ON_BOOT_LOC="$PWD/SYNC/run_on_boot"
