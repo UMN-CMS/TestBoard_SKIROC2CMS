@@ -1,3 +1,15 @@
+//--------------------------------------------------------------------
+// COMPILE: 
+// gcc spi_put_16bits.c -o spi_put_16bits -l bcm2835 -Wall -std=c11
+//--------------------------------------------------------------------
+// USAGE: 
+// sudo ./spi_put_16bits [ORM] [ADDRESS] [VALUE]
+//--------------------------------------------------------------------
+//	Puts 16 bits from [VALUE] into the address specified in
+//	[ADDRESS] and [ORM]. The arguments can either be specified in
+//	decimal or in hex using the '0x' prefix.
+//--------------------------------------------------------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <bcm2835.h>

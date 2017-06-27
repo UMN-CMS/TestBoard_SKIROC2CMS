@@ -1,3 +1,15 @@
+//--------------------------------------------------------------------
+// COMPILE: 
+// gcc -g spi_get_16bits.c -o spi_get_16bits -l bcm2835 -Wall -std=c11
+//--------------------------------------------------------------------
+// USAGE: 
+// sudo ./spi_get_16bits [ORM] [ADDRESS]
+//--------------------------------------------------------------------
+//	Reads 16 bits from the address specified in [ADDRESS] and the
+//	orm in [ORM]. The arguments can either be specified in decimal
+//	or in hex using the '0x' prefix.
+//--------------------------------------------------------------------
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <bcm2835.h>
@@ -6,7 +18,6 @@ int spi_select_orm(int orm);
 int spi_get_16bits(int orm, int addr);
 void init_SPI();
 void end_SPI();
-
 
 int main(int argc, char *argv[]) {
 
