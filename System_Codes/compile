@@ -30,7 +30,6 @@ gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
 gcc -o spi_get_16bits		src/spi_get_16bits.c	-l bcm2835
 gcc -o spi_put_16bits		src/spi_put_16bits.c	-l bcm2835
 
-chmod -R 777 *
 
 
 # Sync Specific
@@ -60,7 +59,7 @@ sudo .'"$RUN_ON_BOOT_LOC"' &
 		echo "There is already a run_on_boot line in /etc/rc.local. Make sure it points to the right location!"
 	fi
 
-	chmod -R 777 SYNC/*
+	chmod 777 SYNC/
 	exit 0
 fi
 
@@ -72,7 +71,7 @@ if [ "$TYPE" == "rdout" ]; then
 		mkdir RDOUT
 	fi
 
-	chmod -R 777 RDOUT/*
+	chmod 777 RDOUT/
 	exit 0
 fi
 
