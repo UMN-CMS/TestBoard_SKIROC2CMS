@@ -1,10 +1,11 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <bcm2835.h>
 
 int spi_select_orm(int orm);
 int spi_put_16bits(int orm, int addr, int value);
-int init_SPI();
-int end_SPI();
+void init_SPI();
+void end_SPI();
 
 int main(int argc, char *argv[]) {
 
