@@ -1,3 +1,4 @@
+#include <stdlib.h>
 #include <bcm2835.h>
 
 int spi_select_orm(int orm);

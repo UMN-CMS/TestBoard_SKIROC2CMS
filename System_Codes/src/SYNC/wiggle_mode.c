@@ -27,8 +27,6 @@ int main() {
 	init_SPI();
 
 	bcm2835_gpio_fsel(MODE, BCM2835_GPIO_FSEL_OUTP);
-	bcm2835_gpio_fsel(CLEARB, BCM2835_GPIO_FSEL_INPT);
-	bcm2835_gpio_set_pud(CLEARB, BCM2835_GPIO_PUD_UP);
 
 	int i = 0;
 	while(1) {
