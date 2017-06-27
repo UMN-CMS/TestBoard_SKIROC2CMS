@@ -59,7 +59,7 @@ sudo .'"$RUN_ON_BOOT_LOC"' &
 		echo "There is already a run_on_boot line in /etc/rc.local. Make sure it points to the right location!"
 	fi
 
-	chmod 777 SYNC/
+	chmod 755 SYNC/
 	exit 0
 fi
 
@@ -71,7 +71,7 @@ if [ "$TYPE" == "rdout" ]; then
 		mkdir RDOUT
 	fi
 
-	chmod 777 RDOUT/
+	chmod 755 RDOUT/
 	exit 0
 fi
 
