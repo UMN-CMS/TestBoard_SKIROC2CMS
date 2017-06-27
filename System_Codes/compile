@@ -27,6 +27,8 @@ gcc -o read_board_ID		src/read_board_ID.c	-l bcm2835
 gcc -o program_fpga		src/program_fpga.c	-l bcm2835
 gcc -o get_board_type		src/get_board_type.c	-l bcm2835
 gcc -o pwr_cycle		src/pwr_cycle.c		-l bcm2835
+gcc -o spi_get_16bits		src/spi_get_16bits.c	-l bcm2835
+gcc -o spi_put_16bits		src/spi_put_16bits.c	-l bcm2835
 
 
 # Sync Specific
