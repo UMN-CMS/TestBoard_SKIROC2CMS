@@ -17,8 +17,8 @@ int main(int argc, char *argv[]) {
 
 	// get orm and address from arguments
 	int orm, addr;
-	orm = atoi(argv[1]);
-	addr = atoi(argv[2]);
+	orm = (int)strtol(argv[1], NULL, 0);
+	addr = (int)strtol(argv[2], NULL, 0);
 
 	init_SPI();
 
