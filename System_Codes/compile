@@ -21,6 +21,13 @@ fi
 TYPE="$1"
 
 
+# Shared Objects
+if [ ! -d "build" ]; then
+	mkdir build/
+fi
+gcc -c spi_common.c
+mv spi_common.o build/
+
 # General
 gcc -o read_flash_memory	src/read_flash_memory.c	-l bcm2835
 gcc -o read_board_ID		src/read_board_ID.c	-l bcm2835
