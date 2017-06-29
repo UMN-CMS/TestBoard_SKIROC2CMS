@@ -9,7 +9,7 @@ gcc -std=c11 -O -c spi_clear_busy.c -l bcm2835
 gcc -std=c11 -O -c spi_fast_read.c
 gcc -std=c11 -O -c Test_Pi_Configuration.c
 gcc -std=c11 -O -c Test_Pi_Pedestal_Combined.c
-mv *.o build/ # move shared objects to the `build` directory
+mv *.o ../build/ # move shared objects to the `build` directory
 
 
 # compile shared objects into final binaries in the `bin` directory

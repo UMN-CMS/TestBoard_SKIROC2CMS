@@ -378,7 +378,7 @@ int main(int argc, char *argv[]){
 ///////////////////////////////////////////////////////////////////////////////////////////////	
 	
 	init_SPI();
-	hexbd = 2;//Current work with one hexaboard, generalize later
+	//hexbd = 2;//Current work with one hexaboard, generalize later
 	//hexbd = 1;//Current work with one hexaboard, generalize later
 
 
