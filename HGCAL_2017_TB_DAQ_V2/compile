@@ -1,0 +1,21 @@
+#!/bin/bash
+set verbose
+
+
+# compile source files into shared objects
+cd src/
+gcc -std=c11 -O -c spi_hexaboard.c -l bcm2835
+gcc -std=c11 -O -c spi_clear_busy.c -l bcm2835
+gcc -std=c11 -O -c spi_fast_read.c
+gcc -std=c11 -O -c Test_Pi_Configuration.c
+gcc -std=c11 -O -c Test_Pi_Pedestal_Combined.c
+mv *.o build/ # move shared objects to the `build` directory
+
+
+# compile shared objects into final binaries in the `bin` directory
+cd ../build/
+gcc Test_Pi_Configuration.o spi_hexaboard.o spi_clear_busy.o spi_fast_read.o -l bcm2835 -o ../bin/DAQ
+
+gcc Test_Pi_Pedestal_Combined.o	spi_hexaboard.o spi_clear_busy.o spi_fast_read.o -l bcm2835 -o ../bin/Ped_DAQ
+
+cd ..

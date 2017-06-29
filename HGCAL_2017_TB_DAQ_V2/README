@@ -1,0 +1,11 @@
+bin:
+  compiled binaries
+
+build:
+  compiler's build files
+
+src:
+  source code
+
+data:
+  data files
