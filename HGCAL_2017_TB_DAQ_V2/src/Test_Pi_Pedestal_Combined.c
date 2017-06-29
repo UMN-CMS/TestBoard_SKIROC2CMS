@@ -1,3 +1,4 @@
+#define _BSD_SOURCE // for usleep
 #include <bcm2835.h>
 #include <stdio.h>
 #include <stdlib.h>
