@@ -22,9 +22,6 @@ TYPE="$1"
 
 
 # Shared Objects
-if [ ! -d "build" ]; then
-	mkdir build/
-fi
 gcc -c spi_common.c
 mv spi_common.o build/
 
@@ -41,10 +38,6 @@ gcc -o spi_put_16bits		src/spi_put_16bits.c	-l bcm2835
 
 # Sync Specific
 if [ "$TYPE" == "sync" ]; then
-
-	if [ ! -d "SYNC" ]; then
-		mkdir SYNC
-	fi
 
 	gcc -o SYNC/check_cable_disconnect	src/SYNC/check_cable_disconnect.c	-l bcm2835
 	gcc -o SYNC/set_clk_delay		src/SYNC/set_clk_delay.c		-l bcm2835
@@ -66,19 +59,12 @@ sudo .'"$RUN_ON_BOOT_LOC"' &
 		echo "There is already a run_on_boot line in /etc/rc.local. Make sure it points to the right location!"
 	fi
 
-	chmod 755 SYNC/
 	exit 0
 fi
 
 
 # Readout Specific
 if [ "$TYPE" == "rdout" ]; then
-
-	if [! -d "RDOUT" ]; then
-		mkdir RDOUT
-	fi
-
-	chmod 755 RDOUT/
 	exit 0
 fi
 
