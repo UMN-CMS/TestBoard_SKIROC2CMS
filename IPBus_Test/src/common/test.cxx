@@ -22,7 +22,7 @@ int main() {
 	hw.dispatch();
 
 	printf("\n");
-	printf("Firmware Version: %i\n", fw_ver.value(), fw_ver.value());
+	printf("Firmware Version: %i\n", fw_ver.value());
 	printf("Constant 0: %x (%i)\n", const0.value(), const0.value());
 	printf("Constant 1: %x (%i)\n", const1.value(), const1.value());
 	printf("Rate 20: %x (%i)\n", rate20.value(), rate20.value());
