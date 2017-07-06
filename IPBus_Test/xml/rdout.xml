@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<node id="TOP">
+	<!-- Rates -->
+	<node id="RATE20"	address="0x300"	permission="r"	mode="single"/>
+	<node id="RATE40"	address="0x301"	permission="r" 	mode="single"/>
+	<node id="RATE80"	address="0x302"	permission="r" 	mode="single"/>
+	<node id="RATE160"	address="0x303"	permission="r" 	mode="single"/>
+	<node id="RATE320"	address="0x304"	permission="r" 	mode="single"/>
+	<node id="RATE320b"	address="0x305"	permission="r" 	mode="single"/>
+	<node id="RATE25"	address="0x306"	permission="r" 	mode="single"/>
+	<node id="RATE50"	address="0x307"	permission="r" 	mode="single"/>
+	<node id="RATE100"	address="0x308"	permission="r" 	mode="single"/>
+	<node id="RATE125"	address="0x309"	permission="r" 	mode="single"/>
+
+	<node id="FW_VER"	address="0x511"	permission="r"	mode="single"/>
+        <node id="CONST0"	address="0x512"	permission="r"	mode="single"/>
+	<node id="CONST1" 	address="0x513"	permission="r"	mode="single"/>
+	<node id="FIFO_00"	address="0x520" permission="r" 	mode="non-incremental"	size="262144"/>
+
+IPB_RATE20           (0x300)
+#define IPB_RATE40           (0x301)
+#define IPB_RATE80           (0x302)
+#define IPB_RATE160          (0x303)
+#define IPB_RATE320          (0x304)
+#define IPB_RATE320b         (0x305)
+#define IPB_RATE25           (0x306)
+#define IPB_RATE50           (0x307)
+#define IPB_RATE100          (0x308)
+#define IPB_RATE125          (0x309)
+
+#define IPB_FIRMWARE_VERSION (0x511) // firmware_version[15:0]
+#define IPB_CONSTANT0        (0x512) // constant0[15:0] // 0xDEAD
+#define IPB_CONSTANT1        (0x513) // constant1[15:0] // 0xBEEF
+
+#define IPB_DISABLE_DEBUG    (0x514)
+#define IPB_SKIROC_MASK      (0x515)
+#define IPB_DATE_STAMP       (0x516)
+#define IPB_BLOCK_SIZE       (0x517)
+#define IPB_PEDESTAL_MODE    (0x518)
+#define IPB_TRIG_COUNT      (0x519)
+#define IPB_USEC_COUNT0      (0x51b)
+#define IPB_USEC_COUNT1      (0x51c)
+#define IPB_BLOCK_READY      (0x51d)
+#define IPB_HALF_EMPTY       (0x51e)
+#define IPB_EMPTY            (0x51f)
+#define IPB_FIFO_00          (0x520)
+#define IPB_RDOUT_DONE       (0x565)
+#define RDOUT_DONE_MAGIC     (0xABCD4321) // match this to make a pulsenode>
+
