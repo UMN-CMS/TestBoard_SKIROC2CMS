@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <node id="TOP">
+
 	<!-- Rates -->
 	<node id="RATE20"	address="0x300"	permission="r"	mode="single"/>
 	<node id="RATE40"	address="0x301"	permission="r" 	mode="single"/>
@@ -13,38 +14,26 @@
 	<node id="RATE100"	address="0x308"	permission="r" 	mode="single"/>
 	<node id="RATE125"	address="0x309"	permission="r" 	mode="single"/>
 
+	<!-- Constants -->
 	<node id="FW_VER"	address="0x511"	permission="r"	mode="single"/>
         <node id="CONST0"	address="0x512"	permission="r"	mode="single"/>
 	<node id="CONST1" 	address="0x513"	permission="r"	mode="single"/>
 	<node id="FIFO_00"	address="0x520" permission="r" 	mode="non-incremental"	size="262144"/>
 
-IPB_RATE20           (0x300)
-#define IPB_RATE40           (0x301)
-#define IPB_RATE80           (0x302)
-#define IPB_RATE160          (0x303)
-#define IPB_RATE320          (0x304)
-#define IPB_RATE320b         (0x305)
-#define IPB_RATE25           (0x306)
-#define IPB_RATE50           (0x307)
-#define IPB_RATE100          (0x308)
-#define IPB_RATE125          (0x309)
+	<!-- Extra -->
+	<node id="DISABLE_DEBUG"	address="0x514" 	permission="r"	mode="single"/>
+	<node id="SKIROC_MASK"      	address="0x515" 	permission="r"	mode="single"/>
+	<node id="DATE_STAMP"       	address="0x516" 	permission="r"	mode="single"/>
+	<node id="BLOCK_SIZE"       	address="0x517" 	permission="r"	mode="single"/>
+	<node id="PEDESTAL_MODE"    	address="0x518" 	permission="r"	mode="single"/>
+	<node id="TRIG_COUNT"      	address="0x519" 	permission="r"	mode="single"/>
+	<node id="USEC_COUNT0"      	address="0x51b" 	permission="r"	mode="single"/>
+	<node id="USEC_COUNT1"      	address="0x51c" 	permission="r"	mode="single"/>
+	<node id="BLOCK_READY"      	address="0x51d" 	permission="r"	mode="single"/>
+	<node id="HALF_EMPTY"       	address="0x51e" 	permission="r"	mode="single"/>
+	<node id="EMPTY"            	address="0x51f"	 	permission="r"	mode="single"/>
+	<node id="FIFO_00"          	address="0x520" 	permission="r"	mode="single"/>
+	<node id="RDOUT_DONE"       	address="0x565" 	permission="r"	mode="single"/>
+	<node id="RDOUT_DONE_MAGIC"     address="0xABCD4321"	permission="r"	mode="single"/> <!-- match this to make a pulsenode -->
 
-#define IPB_FIRMWARE_VERSION (0x511) // firmware_version[15:0]
-#define IPB_CONSTANT0        (0x512) // constant0[15:0] // 0xDEAD
-#define IPB_CONSTANT1        (0x513) // constant1[15:0] // 0xBEEF
-
-#define IPB_DISABLE_DEBUG    (0x514)
-#define IPB_SKIROC_MASK      (0x515)
-#define IPB_DATE_STAMP       (0x516)
-#define IPB_BLOCK_SIZE       (0x517)
-#define IPB_PEDESTAL_MODE    (0x518)
-#define IPB_TRIG_COUNT      (0x519)
-#define IPB_USEC_COUNT0      (0x51b)
-#define IPB_USEC_COUNT1      (0x51c)
-#define IPB_BLOCK_READY      (0x51d)
-#define IPB_HALF_EMPTY       (0x51e)
-#define IPB_EMPTY            (0x51f)
-#define IPB_FIFO_00          (0x520)
-#define IPB_RDOUT_DONE       (0x565)
-#define RDOUT_DONE_MAGIC     (0xABCD4321) // match this to make a pulsenode>
-
+</node>
