@@ -4,9 +4,15 @@
 #include "uhal/uhal.hpp"
 
 uint32_t get_word(HwInterface *hw, char *name);
-// returns a word from the node specified in the "name" argument
+// reads a single word from a register
 
 uint32_t *get_nwords(HwInterface *hw, char *name, size_t N);
-// returns an array of N words from the node specified in the "name" argument
+// reads N words from a register
+
+std::vector<uint32_t> get_word_multi_nodes(HwInterface *hw, std::vector<std::string> names);
+// reads a single word from multiple registers
+
+std::vector<std::vector<uint32_t>> get_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<int> num_words);
+// reads multiple words from multiple registers
 
 #endif

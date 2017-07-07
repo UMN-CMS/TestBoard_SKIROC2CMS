@@ -1,6 +1,9 @@
 #include "uhal/uhal.hpp"
-#include <cstdio>
+#include "ipbus_common.hpp"
+
+#include <vector>
 #include <chrono>
+#include <cstdio>
 
 using namespace uhal;
 
@@ -15,7 +18,7 @@ int main() {
 	std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
 	start = std::chrono::high_resolution_clock::now();
 
-	uint32_t *fifo_block = get_nwords(rdout, "FIFO_00", N);
+	std::vector<uint32_t> fifo_block = get_nwords(rdout, "FIFO_00", N);
 
 	end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end-start;

@@ -1,4 +1,7 @@
 #include "uhal/uhal.hpp"
+#include "ipbus_common.hpp"
+
+#include <vector>
 #include <cstdio>
 
 using namespace uhal;
@@ -15,7 +18,7 @@ int main() {
 
 	// testing get_nwords()
 	const size_t N = 256;
-	uint32_t *fifo = get_nwords(rdout, "FIFO_OO", N);
+	std::vector<uint32_t> fifo = get_nwords(rdout, "FIFO_OO", N);
 	for(int i = 0; i < 256; i++) {
 		printf("%x (%u)\n", fifo[i], fifo[i]);
 	}
