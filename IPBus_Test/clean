@@ -1,0 +1,5 @@
+#!/bin/bash
+
+rm bin/*
+rm obj/*
+rm lib/*

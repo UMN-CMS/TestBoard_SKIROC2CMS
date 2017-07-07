@@ -34,6 +34,5 @@
 	<node id="EMPTY"            	address="0x51f"	 	permission="r"	mode="single"/>
 	<node id="FIFO_00"          	address="0x520" 	permission="r"	mode="single"/>
 	<node id="RDOUT_DONE"       	address="0x565" 	permission="r"	mode="single"/>
-	<node id="RDOUT_DONE_MAGIC"     address="0xABCD4321"	permission="r"	mode="single"/> <!-- match this to make a pulsenode -->
 
 </node>

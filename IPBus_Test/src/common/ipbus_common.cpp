@@ -95,7 +95,7 @@ std::vector<std::vector<uint32_t>> get_nwords_multi_nodes(HwInterface *hw, std::
 
 
 /*** WRITE ***/
-void send_word(HwInterface *hw, const char *name, uint32_t word) {
+void put_word(HwInterface *hw, const char *name, uint32_t word) {
 /* --- writes a single word to a node ---
  *
  * - hw: the hardware interface (must be passed by reference)
@@ -109,7 +109,7 @@ void send_word(HwInterface *hw, const char *name, uint32_t word) {
 }
 
 
-void send_nwords(HwInterface *hw, const char *name, std::vector<uint32_t> words) {
+void put_nwords(HwInterface *hw, const char *name, std::vector<uint32_t> words) {
 /* --- writes multiple words to a single node ---
  *
  * - hw: the hardware interface (must be passed by reference)
@@ -123,7 +123,7 @@ void send_nwords(HwInterface *hw, const char *name, std::vector<uint32_t> words)
 }
 
 
-void send_word_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<uint32_t> words) {
+void put_word_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<uint32_t> words) {
 /* --- writes a single word to multiple nodes ---
  *
  * - hw: the hardware interface (must be passed by reference)
@@ -138,7 +138,7 @@ void send_word_multi_nodes(HwInterface *hw, std::vector<std::string> names, std:
 }
 
 
-void send_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<std::vector<uint32_t>> words) {
+void put_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<std::vector<uint32_t>> words) {
 /* --- writes multiple words to multiple nodes ---
  *
  * - hw: the hardware interface (must be passed by reference)
