@@ -31,16 +31,11 @@ std::vector<uint32_t> get_nwords(HwInterface *hw, const char *name, int N) {
  * - N: the number of words to read from the node
  */
 
-	std::vector<uint32_t> retArray[N];
-
 	ValVector<uint32_t> node = hw->getNode(name).readBlock(N);
 
 	hw->dispatch();
 
-	for(int i = 0; i < N; i++)
-		retArray[i] = node.at(i);
-
-	return retArray;
+	return node.value();
 }
 
 
@@ -51,9 +46,9 @@ std::vector<uint32_t> get_word_multi_nodes(HwInterface *hw, std::vector<std::str
  * - names: vector containing the names of the nodes to be read from (as strings)
  */
 
-	std::vector<uint32_t> words[names.size()];
+	std::vector<uint32_t> words(names.size());
 
-	for(int i = 0; i < words.size(); i++)
+	for(unsigned int i = 0; i < words.size(); i++)
 		words[i] = hw->getNode(names[i].c_str()).read();
 
 	hw->dispatch();
@@ -77,8 +72,10 @@ std::vector<std::vector<uint32_t>> get_nwords_multi_nodes(HwInterface *hw, std::
 
 	std::vector<std::vector<uint32_t>> words;
 
-	for(int i = 0; i < names.size(); i++)
-		words.push_back(hw->getNode(names[i].c_str()).readBlock(num_words[i]));
+	for(unsigned int i = 0; i < names.size(); i++) {
+		ValVector<uint32_t> data = hw->getNode(names[i].c_str()).readBlock(num_words[i]);
+		words.push_back(data.value());
+	}
 
 	hw->dispatch();
 
