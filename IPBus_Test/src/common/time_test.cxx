@@ -7,7 +7,7 @@ using namespace uhal;
 int main() {
 
 	ConnectionManager manager("file://xml/connections.xml");
-	HwInterface hw = manager.getDevice("hcal.crate115.slot1");
+	HwInterface rdout = manager.getDevice("hcal.crate115.slot1");
 
 	const size_t N = 262144;
 
@@ -15,8 +15,7 @@ int main() {
 	std::chrono::time_point<std::chrono::high_resolution_clock> start, end;
 	start = std::chrono::high_resolution_clock::now();
 
-	ValVector<uint32_t> fifo_block = hw.getNode("FIFO_00").readBlock(N);
-	hw.dispatch();
+	uint32_t *fifo_block = get_nwords(rdout, "FIFO_00", N);
 
 	end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double> elapsed_seconds = end-start;

@@ -70,7 +70,7 @@ EXECUTABLES = $(patsubst src/common/%.cxx,bin/%,${EXECUTABLE_SOURCES})
 
 LIBRARY_PATH =  \
                 -L${CACTUS_ROOT}/lib \
-                -L${MY_PROJECT_ROOT}/lib 
+                -L${MY_PROJECT_ROOT}/lib
 
 
 LIBRARIES =     \
