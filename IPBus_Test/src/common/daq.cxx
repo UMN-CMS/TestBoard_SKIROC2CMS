@@ -24,36 +24,37 @@ int main(int argc, char *argv[]){
 
 
 	/*************************** file naming ***************************/
+	char buffer[80];
+	char fname [160];
+	char dirname[] = "data/";
 	time_t rawtime;
 	struct tm *info;
 	FILE *fout, *fraw;
 
+	// Make up a file name for data
 	char runNum[8];
 	sprintf(runNum, "RUN_%04d", runid);
-
-	// Make up a file name for data
 	time(&rawtime);
 	info = localtime(&rawtime);
 	strftime(buffer,80,"_%d%m%y_%H%M", info);
 
+	// save data
 	strcpy(fname, dirname);
 	strcat(fname, runNum);
 	strcat(fname, buffer);
 	strcat(fname,".txt");
 	std::cout << "Filename will be " << fname << std::endl;
 
-	fout = fopen(fname, "w");
+	fout = std::fopen(fname, "w");
 
 	// save raw data
-	if(saveraw) {
-		strcpy(fname, dirname);
-		strcat(fname, runNum);
-		strcat(fname, buffer);
-		strcat(fname,".raw.txt");
-		std::cout << "Raw filename will be " << fname << std::endl;
+	strcpy(fname, dirname);
+	strcat(fname, runNum);
+	strcat(fname, buffer);
+	strcat(fname,".raw.txt");
+	std::cout << "Raw filename will be " << fname << std::endl;
 
-		fraw = fopen(fname, "w");
-	}
+	fraw = std::fopen(fname, "w");
 
 
 
@@ -88,6 +89,7 @@ int main(int argc, char *argv[]){
 			// read data from each hexaboard
 			std::vector<std::vector<uint32_t> > data = get_nwords_multi_nodes(&rdout, active_fifos, RAWSIZE);
 
+			// TODO
 			// decode raw
 			// verify data
 			// format channels
@@ -101,5 +103,7 @@ int main(int argc, char *argv[]){
 
 
 	/*************************** closing actions ***************************/
+	std::fclose(fraw);
+	std::fclose(fout);
 	return 0;
 }
