@@ -1,0 +1,161 @@
+#include "uhal/uhal.hpp"
+#include "ipbus_common.hpp"
+
+#include <vector>
+#include <string>
+#include <iostream>
+
+using namespace uhal;
+
+const int nSCA 15
+const int RAWSIZE 30787
+
+
+int main(int argc, char *argv[]){
+
+	int maxevents = 10;
+
+	ConnectionManager manager("file://xml/connections.xml");
+	std::vector<string> devices = manager.getDevices();
+	std::vector<HwInterface> rdouts;
+	for(int i = 0; i < devices.size(); i++) {
+		string name = devices[i];
+		rdouts[i] = manager.getDevice(name);
+	}
+
+	return 0
+	HwInterface rdout0 = manager.getDevice("hcal.crate115.slot1");
+ 
+	std::vector<
+
+	for(int i = 0; i < maxevents; i++) {
+	
+		for(auto rdout : rdout_list) {
+		
+			
+		
+		}
+	
+	}
+
+			res = spi_send_command(hexbd, CMD_SETSTARTACQ);  // <<<+++   SOFTWARE TRIGGER
+
+			res = spi_send_command(hexbd, CMD_STARTCONPUL);
+			usleep(delay3);// Can be reduced to 3 milliseconds cross-check if this speeds things up
+			res = spi_send_command(hexbd, CMD_STARTROPUL);
+			usleep(delay4);
+
+			res = read_raw_faster(hexbd);
+			memcpy(tmp_raw[j], raw, sizeof raw);
+			// if(hexbd == 2) memcpy(tmp1_raw, raw, sizeof raw);
+			// else if(hexbd == 3) memcpy(tmp2_raw, raw, sizeof raw);
+			/*****************************************************/
+			/*         convert raw to readable data             */
+			/*****************************************************/
+			res = decode_raw();
+
+			/*****************************************************/
+			/* do some verification that data look OK on one chip*/
+			/*****************************************************/
+			chip = 1;
+			for(k = 0; k < 1664; k = k + 1){
+				if((ev[chip][k] & 0x8000 ) == 0){
+					printf("Wrong MSB at %d %x \n",k,ev[chip][k]);
+				}
+				/* if((ev[chip][k] & 0x7E00 ) != 0x0000){
+					printf("Wrong word at %d %d %x\n", i, k,ev[chip][k] );
+				} */
+			}
+
+			if(ev[chip][1923] != 0xc099){
+				printf("Wrong Trailer is %x \n",ev[chip][1923]);
+			}
+
+			/*****************************************************/
+			/*           final convert to readable stuff         */
+			/*****************************************************/
+			res = format_channels();
+			printf("*");
+			fflush(stdout);
+			/*****************************************************/
+			/*             write event to data file              */
+			/*****************************************************/
+			for(chip = 0; chip < 4; chip = chip + 1){
+
+				fprintf(fout, "Event %d Chip %d RollMask %x \n",i, 4*( hexbd - 2) + chip, ev[chip][1920]);
+
+				for(ch = 0; ch < 128; ch = ch +1){
+					for (sample = 0; sample < nSCA; sample = sample +1){
+
+						fprintf(fout, "%d  ", data[chip][ch][sample]);
+
+					}
+
+					fprintf(fout, "\n");
+
+				}
+			}
+			// usleep(delay5)
+
+		}// Loop over hexaboard ends here
+
+		for(raw_iterator = 0; raw_iterator<RAWSIZE; raw_iterator++) {
+			raw_32Bit[raw_iterator] = 0;
+			for(bit_position = 0; bit_position < 4; bit_position++) {
+				for(int layer = 0; layer < NUM_HEXBDS; layer++) {
+					bool hasFired = (bool) (tmp_raw[layer][raw_iterator] & (1<<bit_position));
+
+					if(hasFired) {
+						raw_32Bit[raw_iterator] = raw_32Bit[raw_iterator] | ((unsigned int) 1<<(bit_position + 4*(layer-1)));
+					}
+				}
+			}
+		}
+
+		raw_32Bit[RAWSIZE] = 0x0a0b0c0d;
+
+		if(saveraw)
+			fwrite(raw_32Bit, 1, sizeof(raw_32Bit), fraw);
+
+	}// Loop over Maxevents ends here
+
+
+	fclose(fout);
+	fclose(fraw);
+	end_SPI();
+	return(0);
+	*/
+}// Main ends here
+
+
+
+void init_SPI() {
+
+	if(!bcm2835_init()) {
+		printf("bcm2825_init failed. You most likely are not running as root.\n");
+		exit(1);
+	}
+
+	if(!bcm2835_spi_begin()) {
+		printf("bcm2825_spi_begin failed. You most likely are not running as root.\n");
+		exit(1);
+	}
+
+	bcm2835_spi_begin();
+	bcm2835_spi_setBitOrder(BCM2835_SPI_BIT_ORDER_MSBFIRST);
+	bcm2835_spi_setDataMode(BCM2835_SPI_MODE0);
+	// bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_256);     // 1.5625 MHz
+	bcm2835_spi_setClockDivider(BCM2835_SPI_CLOCK_DIVIDER_64);     // 6 MHz
+	bcm2835_spi_chipSelect(BCM2835_SPI_CS0);                        // Chip-Select 0
+	bcm2835_spi_setChipSelectPolarity(BCM2835_SPI_CS0, LOW);        // Value of CS when active
+
+
+}
+
+
+
+void end_SPI() {
+
+	bcm2835_spi_end();
+	bcm2835_close();
+}
