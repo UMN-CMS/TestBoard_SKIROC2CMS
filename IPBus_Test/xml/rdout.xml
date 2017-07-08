@@ -65,6 +65,6 @@
 	<node id="BLOCK_READY"      	address="0x51d" 	permission="r"	mode="single"/>
 	<node id="HALF_EMPTY"       	address="0x51e" 	permission="r"	mode="single"/>
 	<node id="EMPTY"            	address="0x51f"	 	permission="r"	mode="single"/>
-	<node id="RDOUT_DONE"       	address="0x565" 	permission="r"	mode="single"/>
+	<node id="RDOUT_DONE"       	address="0x565" 	permission="rw"	mode="single"/>
 
 </node>

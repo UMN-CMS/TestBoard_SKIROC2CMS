@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <cstdio>
+#include <unistd.h>
 
 using namespace uhal;
 
@@ -19,6 +20,7 @@ int main() {
 	// initializing hardware
 	ConnectionManager manager("file://xml/connections.xml");
 	HwInterface rdout = manager.getDevice("hcal.crate115.slot1");
+	sleep(5);
 
 	// testing get_word()
 	uint32_t fw_ver = get_word(&rdout, "FW_VER");
@@ -27,11 +29,13 @@ int main() {
 	printf("Firmware Version: %x (%u)\n", fw_ver, fw_ver);
 	printf("Constant 0: %x (%u)\n", const0, const0);
 	printf("Constant 1: %x (%u)\n", const1, const1);
+	sleep(3);
 
 	// testing get_nwords()
 	const size_t N = 256;
 	std::vector<uint32_t> fifo = get_nwords(&rdout, "FIFO_00", N);
 	printf("Reading from fifo...\n");
+	sleep(1);
 	for(int i = 0; i < 256; i++) {
 		printf("%x (%u)\n", fifo[i], fifo[i]);
 	}
