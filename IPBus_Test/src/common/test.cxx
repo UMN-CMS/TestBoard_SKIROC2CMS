@@ -1,3 +1,11 @@
+/* src/common/test.cxx
+ *
+ * Tests the IPBus software functionality by reading some constants from a rdout board.
+ * The firmware version is arbitrary. Constant 0 and 1 should read "dead beef". The fifo
+ * doesn't really matter - that's a test of get_nwords()
+ *
+ */
+
 #include "uhal/uhal.hpp"
 #include "ipbus_common.hpp"
 
@@ -27,6 +35,7 @@ int main() {
 	for(int i = 0; i < 256; i++) {
 		printf("%x (%u)\n", fifo[i], fifo[i]);
 	}
+	printf("Done reading from fifo\n");
 
 	return 0;
 }

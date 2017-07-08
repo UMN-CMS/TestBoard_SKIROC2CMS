@@ -1,3 +1,10 @@
+/* src/common/multi_hw_test.cxx
+ *
+ * An example for how multiple hardware devices can be used. Also tests the
+ * get_word_multi_nodes() and get_nwords_multi_nodes() functions.
+ *
+ */
+
 #include "uhal/uhal.hpp"
 #include "ipbus_common.hpp"
 
