@@ -5,28 +5,63 @@
 #include <vector>
 #include <string>
 #include <iostream>
-#include <chrono>
+#include <ctime>
+#include <cstdio>// for file writing
 
 using namespace uhal;
 
 
 int main(int argc, char *argv[]){
 
-	/************ argument processing ************/
-	// if(argc < 3)
-		// die("usage: ./bin/pedestal daq [RUN NUMBER] [EVENTS]");
-	int RUN_NUMBER = (argc < 3) ? 0 : atoi(argv[1]);
-	int MAXEVENTS = (argc < 3) ? 1 : atoi(argv[2]);
+	/*************************** argument processing ***************************/
+	int runid = (argc < 3) ? 0 : atoi(argv[1]);// for debug
+	int maxevents = (argc < 3) ? 1 : atoi(argv[2]);// for debug
+	bool saveraw = (argc == 4 && atoi(argv[3]) == 0) ? false : true;
 
-	std::cout << "Run number: " << RUN_NUMBER << std::endl;
-	std::cout << "Events: " << MAXEVENTS << std::endl;
+	std::cout << "Run number: " << runid << std::endl;
+	std::cout << "Events: " << maxevents << std::endl;
+	std::cout << "Save raw: " << saveraw << std::endl;
 
 
-	/************ initialization ************/
+	/*************************** file naming ***************************/
+	time_t rawtime;
+	struct tm *info;
+	FILE *fout, *fraw;
+
+	char runNum[8];
+	sprintf(runNum, "RUN_%04d", runid);
+
+	// Make up a file name for data
+	time(&rawtime);
+	info = localtime(&rawtime);
+	strftime(buffer,80,"_%d%m%y_%H%M", info);
+
+	strcpy(fname, dirname);
+	strcat(fname, runNum);
+	strcat(fname, buffer);
+	strcat(fname,".txt");
+	std::cout << "Filename will be " << fname << std::endl;
+
+	fout = fopen(fname, "w");
+
+	// save raw data
+	if(saveraw) {
+		strcpy(fname, dirname);
+		strcat(fname, runNum);
+		strcat(fname, buffer);
+		strcat(fname,".raw.txt");
+		std::cout << "Raw filename will be " << fname << std::endl;
+
+		fraw = fopen(fname, "w");
+	}
+
+
+
+	/*************************** initialization ***************************/
 	setLogLevelTo(Error());
 
 
-	/************ set up connections ************/
+	/*************************** set up connections ***************************/
 	ConnectionManager manager("file://xml/connections.xml");// update this file with new connections
 	std::vector<std::string> ids = manager.getDevices();
 	std::vector<HwInterface> rdouts;
@@ -34,8 +69,8 @@ int main(int argc, char *argv[]){
 		rdouts.push_back(manager.getDevice(ids[i]));
 
 
-	/************ loop over events ************/
-	for(int event = 0; event < MAXEVENTS; event++) {
+	/*************************** loop over events ***************************/
+	for(int event = 0; event < maxevents; event++) {
 		// loop over readout boards
 		std::vector<HwInterface>::iterator hw_iter, hw_end;// C++ 11 ... for(auto& rdout : rdouts)
 		for(hw_end=rdouts.end(), hw_iter=rdouts.begin(); hw_iter != hw_end; ++hw_iter) {
@@ -65,6 +100,6 @@ int main(int argc, char *argv[]){
 	}// end loop over events
 
 
-	/************ closing actions ************/
+	/*************************** closing actions ***************************/
 	return 0;
 }
