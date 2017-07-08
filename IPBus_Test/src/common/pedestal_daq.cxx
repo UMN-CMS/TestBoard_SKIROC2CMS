@@ -6,15 +6,20 @@
 #include <iostream>
 
 const int RAWSIZE = 30787;
+const int SKIROCS_PER_HEXBD = 4;
 
 using namespace uhal;
 
 bool check_block_ready(HwInterface *hw, std::vector<std::string> active_fifos);
-std::vector<std::string> hexaboard_to_fifo(std::vector<int>);
-std::vector<std::string> hexaboard_to_fifo(int);
+std::vector<std::string> hexbd_to_fifo(std::vector<int> hexbd);
+std::vector<std::string> hexbd_to_fifo(int hexbd);
 
 int main(int argc, char *argv[]){
-
+	std::vector<std::string> fifos = hexbd_to_fifo(3);
+	for(unsigned int i = 0; i < fifos.size(); i++) {
+		std::cout << fifos[i] << std::endl;
+	}
+/*
 	// argument processing
 	// if(argc < 3)
 		// die("usage: ./bin/pedestal daq [RUN NUMBER] [EVENTS]");
@@ -65,7 +70,7 @@ int main(int argc, char *argv[]){
 		}// end loop over rdouts
 	}// end loop over events
 
-
+*/
 	// closing actions
 	return 0;
 }
@@ -85,11 +90,27 @@ bool check_block_ready(HwInterface *hw, std::vector<std::string> active_fifos) {
 }
 
 
-std::vector<string> hexaboard_to_fifo(int) {
+std::vector<string> hexbd_to_fifo(int hexbd) {
+	std::vector<string> fifo_list(SKIROCS_PER_HEXBD);
 
+	for(int i = 0; i < SKIROCS_PER_HEXBD; i++) {
+		fifo_num = (SKIROCS_PER_HEXBD * hexbd) + i;
+		char fifo_name[10];
+		sprintf(fifo_name, "FIFO_%.2x", fifo_num);
+		fifo_list[i] = fifo_name;
+	}
+
+	return fifo_list;
 }
 
 
-std::vector<string> hexaboard_to_fifo(std::vector<int>) {
+std::vector<string> hexbd_to_fifo(std::vector<int> hexbds) {
+	std::vector<string> fifo_list;
 
+	for(unsigned int i = 0; i < hexbds; i++) {
+		std::vector<string> single_fifo_list = hexbd_to_fifo(hexbds[i]);
+		fifo_list.insert(fifo_list.end(), single_fifo_list.begin(), single_fifo_list.end());
+	}
+
+	return fifo_list;
 }
