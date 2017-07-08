@@ -22,7 +22,7 @@ int main() {
 
 	// testing get_nwords()
 	const size_t N = 256;
-	std::vector<uint32_t> fifo = get_nwords(&rdout, "FIFO_OO", N);
+	std::vector<uint32_t> fifo = get_nwords(&rdout, "FIFO_00", N);
 	printf("Reading from fifo...\n");
 	for(int i = 0; i < 256; i++) {
 		printf("%x (%u)\n", fifo[i], fifo[i]);

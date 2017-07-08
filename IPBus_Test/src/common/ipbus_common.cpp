@@ -58,39 +58,75 @@ std::vector<uint32_t> get_word_multi_nodes(HwInterface *hw, std::vector<std::str
  * - names: vector containing the names of the nodes to be read from (as strings)
  */
 
-	std::vector<uint32_t> words(names.size());
+	unsigned int i;
 
-	for(unsigned int i = 0; i < words.size(); i++)
-		words[i] = hw->getNode(names[i].c_str()).read();
+	std::vector<ValWord<uint32_t> > words(names.size());
+	std::vector<uint32_t> values(names.size());
+
+	for(i = 0; i < names.size(); i++)
+		words[i] = hw->getNode(names[i]).read();
 
 	hw->dispatch();
 
-	return words;
+	for(i = 0; i < names.size(); i++)
+		values[i] = words[i].value();
+
+	return values;
 }
 
 
-std::vector<std::vector<uint32_t>> get_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<int> num_words) {
+std::vector<std::vector<uint32_t> > get_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, int num_words) {
 /* --- reads multiple words from multiple nodes ---
  *
  * - hw: the hardware interface (must be passed by reference)
  * - names: vector containing the names of the nodes to be read from (as strings)
- * - num_words: vector containing the number of words to read from each node
+ * - num_words: the number of words to read from each node (overloaded with a vector if different block sizes need to be read)
+ */
+
+	unsigned int i;
+
+	std::vector<ValVector<uint32_t> > vectors(names.size());
+	std::vector<std::vector<uint32_t> > vals(names.size());
+
+	for(i = 0; i < names.size(); i++)
+		vectors[i] = hw->getNode(names[i]).readBlock(num_words);
+
+	hw->dispatch();
+
+	for(i = 0; i < names.size(); i++)
+		vals[i] = vectors[i].value();
+
+	return vals;
+}
+
+
+std::vector<std::vector<uint32_t> > get_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<int> num_words) {
+/* --- reads multiple words from multiple nodes ---
+ *
+ * - hw: the hardware interface (must be passed by reference)
+ * - names: vector containing the names of the nodes to be read from (as strings)
+ * - num_words: vector containing the number of words to read from each node (overloaded with an int if only one block size)
  */
 
 	if(names.size() != num_words.size())
 		die("names and num_words do not have the same size");
 
-	std::vector<std::vector<uint32_t>> words;
+	unsigned int i;
 
-	for(unsigned int i = 0; i < names.size(); i++) {
-		ValVector<uint32_t> data = hw->getNode(names[i].c_str()).readBlock(num_words[i]);
-		words.push_back(data.value());
-	}
+	std::vector<ValVector<uint32_t> > vectors(names.size());
+	std::vector<std::vector<uint32_t> > vals(names.size());
+
+	for(i = 0; i < names.size(); i++)
+		vectors[i] = hw->getNode(names[i]).readBlock(num_words[i]);
 
 	hw->dispatch();
 
-	return words;
+	for(i = 0; i < names.size(); i++)
+		vals[i] = vectors[i].value();
+
+	return vals;
 }
+
 
 
 
@@ -132,13 +168,13 @@ void put_word_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::
  */
 
 	for(unsigned int i = 0; i < words.size(); i++)
-		hw->getNode(names[i].c_str()).write(words[i]);
+		hw->getNode(names[i]).write(words[i]);
 	hw->dispatch();
 	return;
 }
 
 
-void put_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<std::vector<uint32_t>> words) {
+void put_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std::vector<std::vector<uint32_t> > words) {
 /* --- writes multiple words to multiple nodes ---
  *
  * - hw: the hardware interface (must be passed by reference)
@@ -150,7 +186,7 @@ void put_nwords_multi_nodes(HwInterface *hw, std::vector<std::string> names, std
 		die("names and words do not have the same size");
 
 	for(unsigned int i = 0; i < names.size(); i++)
-		hw->getNode(names[i].c_str()).writeBlock(words[i]);
+		hw->getNode(names[i]).writeBlock(words[i]);
 	hw->dispatch();
 	return;
 }
