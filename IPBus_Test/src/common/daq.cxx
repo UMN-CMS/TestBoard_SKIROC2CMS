@@ -25,36 +25,31 @@ int main(int argc, char *argv[]){
 
 	/*************************** file naming ***************************/
 	char buffer[80];
-	char fname [160];
+	char fname[160], raw_fname[160];
 	char dirname[] = "data/";
 	time_t rawtime;
 	struct tm *info;
-	FILE *fout, *fraw;
 
-	// Make up a file name for data
+	// run number and time
 	char runNum[8];
 	sprintf(runNum, "RUN_%04d", runid);
 	time(&rawtime);
 	info = localtime(&rawtime);
 	strftime(buffer,80,"_%d%m%y_%H%M", info);
 
-	// save data
+	// processed data filename
 	strcpy(fname, dirname);
 	strcat(fname, runNum);
 	strcat(fname, buffer);
 	strcat(fname,".txt");
 	std::cout << "Filename will be " << fname << std::endl;
 
-	fout = std::fopen(fname, "w");
-
-	// save raw data
-	strcpy(fname, dirname);
-	strcat(fname, runNum);
-	strcat(fname, buffer);
-	strcat(fname,".raw.txt");
+	// raw data filename
+	strcpy(raw_fname, dirname);
+	strcat(raw_fname, runNum);
+	strcat(raw_fname, buffer);
+	strcat(raw_fname,".raw.txt");
 	std::cout << "Raw filename will be " << fname << std::endl;
-
-	fraw = std::fopen(fname, "w");
 
 
 
@@ -87,11 +82,13 @@ int main(int argc, char *argv[]){
 			}
 
 			// read data from each hexaboard
-			std::vector<std::vector<uint32_t> > data = get_nwords_multi_nodes(&rdout, active_fifos, RAWSIZE);
+			std::vector<std::vector<uint32_t> > raw_data = get_nwords_multi_nodes(&rdout, active_fifos, RAWSIZE);
+			// do we want a single vector here? And how should it be arranged?
 
 			// TODO
-			// decode raw
 			// verify data
+			// format raw
+			// decode raw
 			// format channels
 			// write to data file
 
