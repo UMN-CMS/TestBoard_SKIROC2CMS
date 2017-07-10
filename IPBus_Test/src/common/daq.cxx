@@ -57,9 +57,10 @@ int main(int argc, char *argv[]){
 	setLogLevelTo(Error());
 
 
+
 	/*************************** set up connections ***************************/
 	ConnectionManager manager("file://xml/connections.xml");// update this file with new connections
-	std::vector<std::string> ids = manager.getDevices();
+	std::vector<std::string> ids = manager.getDevices(".*rdout.*");
 	std::vector<HwInterface> rdouts;
 	for(unsigned int i = 0; i < ids.size(); i++)
 		rdouts.push_back(manager.getDevice(ids[i]));
@@ -100,7 +101,7 @@ int main(int argc, char *argv[]){
 
 
 	/*************************** closing actions ***************************/
-	std::fclose(fraw);
-	std::fclose(fout);
+	// std::fclose(fraw);
+	// std::fclose(fout);
 	return 0;
 }

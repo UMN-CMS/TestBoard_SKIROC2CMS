@@ -87,8 +87,7 @@ LIBRARIES =     \
                 -lcactus_uhal_uhal
 
 
-CPP_FLAGS = -O3 -Wall -fPIC -g ${INCLUDE_PATH} -std=c++11
-#CPP_FLAGS = -O3 -Wall -fPIC -g ${INCLUDE_PATH}
+CPP_FLAGS = -O3 -Wall -fPIC -g ${INCLUDE_PATH}
 LINK_LIBRARY_FLAGS = -shared -fPIC -Wall -O3 ${LIBRARY_PATH} ${LIBRARIES}
 LINK_EXECUTABLE_FLAGS = -Wall -g -O3 ${LIBRARY_PATH} ${LIBRARIES} -l${LIBNAME}
 
