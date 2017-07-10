@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 #include <ctime>
-#include <cstdio>// for file writing
 
 using namespace uhal;
 
